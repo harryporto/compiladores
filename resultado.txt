@@ -1,0 +1,264 @@
+Aluno: WILLIAM FABIAN MACHADO VERA
+Matricula: 214100232
+
+(1) Compilacao do codigo:  OK
+(2) Execucao do programa:  OK
+
+----- SCORE -------
+
+9  acertos /  21  testes ===> 43 %
+
+--------------------------------------
+
+Caso de teste (1) - err3.def - ERRO - diff saida_correta saida_compilador:
+--- /tmp/compilers/G7AZZG0DFEJE/compiladores/correct_lex/err3.lex	2017-11-07 00:01:10.842457207 +0000
++++ /tmp/compilers/G7AZZG0DFEJE/compiladores/saida	2017-11-07 00:01:11.326499771 +0000
+@@ -14,4 +14,5 @@
+ ID	"d"	2
+ SYM	"||"	2
+ ID	"a"	2
+-ERROR	"|"	2
++SYM "|" 2
++ERROR "&" 2
+
+Caso de teste (2) - err8.def - OK
+
+Caso de teste (3) - 3.def - ERRO - diff saida_correta saida_compilador:
+weird error: too many lines differ!
+
+Caso de teste (4) - err2.def - ERRO - diff saida_correta saida_compilador:
+--- /tmp/compilers/G7AZZG0DFEJE/compiladores/correct_lex/err2.lex	2017-11-07 00:01:10.842457207 +0000
++++ /tmp/compilers/G7AZZG0DFEJE/compiladores/saida	2017-11-07 00:01:12.202576809 +0000
+@@ -14,4 +14,14 @@
+ ID	"d"	2
+ SYM	"||"	2
+ ID	"a"	2
+-ERROR	"|"	2
++SYM "|=" 2
++ID "b" 2
++SYM ")" 2
++SYM "{" 2
++ID "print" 3
++SYM "(" 3
++DEC "1" 3
++SYM ")" 3
++SYM ";" 3
++SYM "}" 4
++SYM "}" 5
+
+Caso de teste (5) - err5.def - OK
+
+Caso de teste (6) - 01.def - OK
+
+Caso de teste (7) - err1.def - ERRO - diff saida_correta saida_compilador:
+--- /tmp/compilers/G7AZZG0DFEJE/compiladores/correct_lex/err1.lex	2017-11-07 00:01:10.842457207 +0000
++++ /tmp/compilers/G7AZZG0DFEJE/compiladores/saida	2017-11-07 00:01:13.478689026 +0000
+@@ -15,4 +15,4 @@
+ DEC	"6"	3
+ SYM	";"	3
+ KEY	"let"	4
+-ERROR	"_"	4
++ERROR "_a" 4
+
+Caso de teste (8) - err9.def - ERRO - diff saida_correta saida_compilador:
+--- /tmp/compilers/G7AZZG0DFEJE/compiladores/correct_lex/err9.lex	2017-11-07 00:01:10.842457207 +0000
++++ /tmp/compilers/G7AZZG0DFEJE/compiladores/saida	2017-11-07 00:01:14.050739329 +0000
+@@ -6,4 +6,8 @@
+ ID	"string"	2
+ ID	"bira"	2
+ SYM	"="	2
+-ERROR	"""	2
++SYM """ 2
++ID "bacana" 2
++SYM """ 2
++SYM ";" 2
++SYM "}" 3
+
+Caso de teste (9) - 8.def - ERRO - diff saida_correta saida_compilador:
+--- /tmp/compilers/G7AZZG0DFEJE/compiladores/correct_lex/8.lex	2017-11-07 00:01:10.842457207 +0000
++++ /tmp/compilers/G7AZZG0DFEJE/compiladores/saida	2017-11-07 00:01:14.550783300 +0000
+@@ -6,15 +6,4 @@
+ SYM	";"	1
+ SYM	"="	1
+ SYM	"+"	1
+-SYM	"-"	1
+-SYM	"*"	1
+-SYM	"/"	1
+-SYM	"<"	1
+-SYM	">"	1
+-SYM	"<="	1
+-SYM	">="	1
+-SYM	"=="	1
+-SYM	"!="	1
+-SYM	"&&"	1
+-SYM	"||"	1
+-SYM	"!"	1
++ERROR "-" 1
+
+Caso de teste (10) - 2.def - ERRO - diff saida_correta saida_compilador:
+--- /tmp/compilers/G7AZZG0DFEJE/compiladores/correct_lex/2.lex	2017-11-07 00:01:10.842457207 +0000
++++ /tmp/compilers/G7AZZG0DFEJE/compiladores/saida	2017-11-07 00:01:15.054827624 +0000
+@@ -19,35 +19,4 @@
+ ID	"fib"	5
+ SYM	"("	5
+ ID	"n"	5
+-SYM	"-"	5
+-DEC	"1"	5
+-SYM	")"	5
+-SYM	"+"	5
+-ID	"fib"	5
+-SYM	"("	5
+-ID	"n"	5
+-SYM	"-"	5
+-DEC	"2"	5
+-SYM	")"	5
+-SYM	";"	5
+-SYM	"}"	6
+-KEY	"def"	8
+-ID	"main"	8
+-SYM	"("	8
+-SYM	")"	8
+-SYM	"{"	8
+-KEY	"let"	9
+-ID	"n"	9
+-SYM	";"	9
+-ID	"print"	10
+-SYM	"("	10
+-ID	"fib"	10
+-SYM	"("	10
+-ID	"n"	10
+-SYM	")"	10
+-SYM	")"	10
+-SYM	";"	10
+-KEY	"return"	11
+-DEC	"0"	11
+-SYM	";"	11
+-SYM	"}"	12
++ERROR "-" 5
+
+Caso de teste (11) - err4.def - OK
+
+Caso de teste (12) - 7.def - ERRO - diff saida_correta saida_compilador:
+--- /tmp/compilers/G7AZZG0DFEJE/compiladores/correct_lex/7.lex	2017-11-07 00:01:10.842457207 +0000
++++ /tmp/compilers/G7AZZG0DFEJE/compiladores/saida	2017-11-07 00:01:16.306937729 +0000
+@@ -11,16 +11,4 @@
+ SYM	";"	3
+ SYM	"="	3
+ SYM	"+"	3
+-SYM	"-"	3
+-SYM	"*"	3
+-SYM	"/"	3
+-SYM	"<"	3
+-SYM	">"	3
+-SYM	"<="	3
+-SYM	">="	3
+-SYM	"=="	3
+-SYM	"!="	3
+-SYM	"&&"	3
+-SYM	"||"	3
+-SYM	"!"	3
+-SYM	"}"	4
++ERROR "-" 3
+
+Caso de teste (13) - err10.def - ERRO - diff saida_correta saida_compilador:
+--- /tmp/compilers/G7AZZG0DFEJE/compiladores/correct_lex/err10.lex	2017-11-07 00:01:10.842457207 +0000
++++ /tmp/compilers/G7AZZG0DFEJE/compiladores/saida	2017-11-07 00:01:16.838984515 +0000
+@@ -38,50 +38,4 @@
+ ID	"ackermann"	6
+ SYM	"("	6
+ ID	"m"	6
+-SYM	"-"	6
+-DEC	"1"	6
+-SYM	","	6
+-DEC	"1"	6
+-SYM	")"	6
+-SYM	";"	6
+-SYM	"}"	7
+-KEY	"else"	8
+-KEY	"if"	8
+-SYM	"("	8
+-ID	"m"	8
+-SYM	">"	8
+-DEC	"0"	8
+-SYM	"&&"	8
+-ID	"n"	8
+-SYM	">"	8
+-DEC	"0"	8
+-SYM	")"	8
+-SYM	"{"	8
+-ID	"ackermann"	9
+-SYM	"("	9
+-ID	"m"	9
+-SYM	"-"	9
+-DEC	"1"	9
+-SYM	","	9
+-ID	"ackermann"	9
+-SYM	"("	9
+-ID	"m"	9
+-SYM	","	9
+-ID	"n"	9
+-SYM	"-"	9
+-DEC	"1"	9
+-SYM	")"	9
+-SYM	")"	9
+-SYM	";"	9
+-SYM	"}"	10
+-SYM	"}"	11
+-KEY	"def"	13
+-ID	"main"	13
+-SYM	"("	13
+-SYM	")"	13
+-SYM	"{"	13
+-KEY	"let"	14
+-ID	"f"	14
+-SYM	"="	14
+-ID	"ackermann"	14
+-ERROR	"."	14
++ERROR "-" 6
+
+Caso de teste (14) - err7.def - OK
+
+Caso de teste (15) - 5.def - OK
+
+Caso de teste (16) - 10.def - ERRO - diff saida_correta saida_compilador:
+weird error: too many lines differ!
+
+Caso de teste (17) - 4.def - OK
+
+Caso de teste (18) - err6.def - OK
+
+Caso de teste (19) - 9.def - OK
+
+Caso de teste (20) - 11.def - ERRO - diff saida_correta saida_compilador:
+weird error: too many lines differ!
+
+Caso de teste (21) - 6.def - ERRO - diff saida_correta saida_compilador:
+--- /tmp/compilers/G7AZZG0DFEJE/compiladores/correct_lex/6.lex	2017-11-07 00:01:10.842457207 +0000
++++ /tmp/compilers/G7AZZG0DFEJE/compiladores/saida	2017-11-07 00:01:21.055355283 +0000
+@@ -59,14 +59,14 @@
+ SYM	";"	19
+ SYM	"}"	20
+ SYM	"}"	21
+-KEY	"def"	23
+-ID	"maine"	23
+-SYM	"("	23
+-SYM	")"	23
+-SYM	"{"	23
+-KEY	"let"	24
+-ID	"a"	24
+-SYM	"="	24
+-DEC	"5"	24
+-SYM	";"	24
+-SYM	"}"	25
++KEY "def" 22
++ID "maine" 22
++SYM "(" 22
++SYM ")" 22
++SYM "{" 22
++KEY "let" 23
++ID "a" 23
++SYM "=" 23
++DEC "5" 23
++SYM ";" 23
++SYM "}" 24
+
