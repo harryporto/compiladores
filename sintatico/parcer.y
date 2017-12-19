@@ -7,10 +7,17 @@
 extern int yylex();
 extern int yyparse();
 extern FILE *yyin;
+extern FILE *yyout;
 
-void yyerror(char *s);
 
 %}
+
+%union
+{
+  char valor[100];
+  int inteiro;
+};
+
 
 %token MAIS
 %token MENOS
@@ -35,6 +42,7 @@ void yyerror(char *s);
 %token VIRGULA
 %token IGUAL
 %token ID
+%token DEC
 %token BREAK
 %token CONTINUE
 %token IF
@@ -74,7 +82,18 @@ BinOp 	: '+'
 
 %%
 
+int main(int argc, char** argv){
 
-int main() {
-  return yyparse();
+	yyin = fopen(argv[1], "r");
+	yyout = fopen(argv[2], "w");
+
+	if(!yyin) printf("Arquivo nao pode ser aberto!\n");
+	else{
+		yyparse();
+		fprintf(yyout,"]\n");
+	}
+	fclose(yyin);
+	fclose(yyout);
+	return 0;
 }
+

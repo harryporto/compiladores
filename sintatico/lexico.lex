@@ -1,5 +1,7 @@
 %{
 #include <math.h>
+#include <stdio.h>
+#include <string.h>
 
 #include "parcer.tab.c"
 
@@ -10,7 +12,7 @@ int linha=1;
 
 
 
-%option yylineno
+%option noyywrap
 DEC [0-9]
 ID  [a-zA-Z][a-zA-Z0-9_]*
 COM [<>!=][=]
@@ -47,12 +49,13 @@ COM [<>!=][=]
 "break"    		{  return BREAK;  }
 "continue"    		{  return CONTINUE;  }
 "let"   		{  return LET;  }
-{ID} 			{ yylval.sval = malloc(strlen(yytext));	strncpy(yylval.sval, yytext, strlen(yytext)); return ID; }
-{DEC}+ 			{ yylval.integer = atoi(yytext); return DEC;  }
-" "+ 			{ linha++; out << linha; linha = out.str(); out.str("");}
-\n  			{ linha++; out << linha; linha = out.str(); out.str(""); }
+{ID} 			{ strcpy(yylval.valor, yytext); return ID; }
+{DEC}+ 			{ yylval.inteiro  = atoi(yytext); return DEC;  }
+" "+ 			{ linha++; }
+\n  			{ linha++; }
 [ \t\n] {}
-. { teste = teste + "ERROR"+" \"" + string(yytext) +"\" " +linha + "\n";  return 0; }
+"_"		        								{fprintf(yyout, "ERROR \"%s\" %d\n",yytext,linha); return 0;}
+.         										{fprintf(yyout, "ERROR \"%s\" %d\n",yytext,linha); return 0;}
 %%
 
 /*%%

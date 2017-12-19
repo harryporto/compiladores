@@ -1,5 +1,5 @@
 
-#line 3 "lex.yy.c"
+main#line 3 "lex.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -950,7 +950,7 @@ YY_RULE_SETUP
 case 32:
 YY_RULE_SETUP
 #line 53 "lexico.lex"
-{ yylval.inteiro  = atoi(yytext); return DEC;  }
+{ yylval.inteiro = atoi(yytext); return DEC;  }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
