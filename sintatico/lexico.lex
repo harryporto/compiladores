@@ -1,17 +1,23 @@
 %{
 #include <math.h>
+
+#include "parcer.tab.c"
+
+#define YY_DECL int yylex()
+
 int linha=1;
 %}
 
 
-%option noyywrap
+
+%option yylineno
 DEC [0-9]
 ID  [a-zA-Z][a-zA-Z0-9_]*
 COM [<>!=][=]
 
 
 %%
-"+"      		{  return (MAIS); }
+"+"      		{  return MAIS; }
 "-"       		{  return MENOS; } 
 "*"      		{  return VEZES; }
 "/"      		{  return DIVISAO; }
@@ -48,7 +54,6 @@ COM [<>!=][=]
 [ \t\n] {}
 . { teste = teste + "ERROR"+" \"" + string(yytext) +"\" " +linha + "\n";  return 0; }
 %%
-
 
 /*%%
 
