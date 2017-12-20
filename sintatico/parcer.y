@@ -46,8 +46,8 @@ void yyerror(char* s) {
 %token FECHA_COLCHETE
 %token VIRGULA
 %token IGUAL
-%token ID
-%token DEC
+%token <valor> ID
+%token <inteiro> DEC
 %token BREAK
 %token CONTINUE
 %token IF
@@ -65,27 +65,65 @@ void yyerror(char* s) {
 %left  '*'  '/'
 %left UNA
 
-%type<inteiro> DEC
-%type<valor> ID
 
+%type <inteiro> Expr
+%type <valor> Bin_Ope Una_Ope Programa Var_decl Def_decl Lista_parametros Bloco Stmt Assign Funcao Argumentos
 %%
 
-/*Expr 	: Expr BinOp Expr ';' 
-	| 
-	;*/
-BinOp 	: DEC MAIS DEC  BinOp{fprintf(yyout,"%d + %d", $1,$3);}
-	| DEC MENOS DEC BinOp	{fprintf(yyout,"%d - %d", $1,$3);}
-	| DEC VEZES DEC	BinOp {fprintf(yyout,"%d * %d", $1,$3);}
-	| DEC DIVISAO DEC BinOp	{fprintf(yyout,"%d / %d", $1,$3);}
-	| DEC MENOR DEC	{fprintf(yyout,"%d < %d", $1,$3);}
-	| DEC MENOR_IGUAL DEC 	{fprintf(yyout,"%d <= %d", $1,$3);}
-	| DEC MAIOR DEC	{fprintf(yyout,"%d > %d", $1,$3);}
-	| DEC MAIOR_IGUAL DEC 	{fprintf(yyout,"%d >= %d", $1,$3);}
-	| DEC IGUAL_IGUAL DEC 	{fprintf(yyout,"%d == %d", $1,$3);}
-	| DEC DIFERENTE_IGUAL DEC 	{fprintf(yyout,"%d != %d", $1,$3);}
-	| DEC AND DEC	{fprintf(yyout,"%d && %d", $1,$3);}
-	| DEC OR DEC	{fprintf(yyout,"%d || %d", $1,$3);}
-	| 
+Start: Programa			{fprintf(yyout, "[ " );}
+
+Programa : Var_decl Programa 
+      | Def_decl Programa 
+      | 
+      ;
+
+Var_decl : LET ID PONTO_VIRGULA
+	| LET ID IGUAL Expr PONTO_VIRGULA
+	;
+
+Def_decl : DEF ID ABRE_PAREN FECHA_PAREN Bloco
+	| DEF ID ABRE_PAREN Lista_parametros FECHA_PAREN Bloco
+	;
+
+Lista_parametros : ID VIRGULA ID 		//aqui esta errado
+	|ID
+	;	
+
+Bloco : ABRE_CHAVE Var_decl Stmt FECHA_CHAVE
+	;
+
+Stmt : Assign PONTO_VIRGULA
+	| Funcao PONTO_VIRGULA
+	| IF  ABRE_PAREN Expr FECHA_PAREN Bloco
+	| WHILE ABRE_PAREN Expr FECHA_PAREN Bloco
+	| RETURN Expr PONTO_VIRGULA
+	| BREAK PONTO_VIRGULA
+	| CONTINUE PONTO_VIRGULA
+
+Assign : ID IGUAL Expr
+
+Funcao : ID ABRE_PAREN Argumentos FECHA_PAREN	
+
+Argumentos : Expr
+	| Expr , Argumentos
+
+Expr     : Expr MAIS Expr 			{fprintf(yyout,"+ [%d] [%d]",$1,$3);}
+	| Expr MENOS Expr 				{fprintf(yyout,"- [%d] [%d]",$1,$3);}
+	| Expr VEZES Expr 				{fprintf(yyout,"* [%d] [%d]",$1,$3);}
+	| Expr DIVISAO Expr 			{fprintf(yyout,"/ [%d] [%d]",$1,$3);}
+	| Expr MENOR Expr 				{fprintf(yyout,"< [%d] [%d]",$1,$3);}
+	| Expr MENOR_IGUAL Expr 		{fprintf(yyout,"<= [%d] [%d]",$1,$3);}
+	| Expr MAIOR Expr 				{fprintf(yyout,"> [%d] [%d]",$1,$3);}
+	| Expr MAIOR_IGUAL Expr 		{fprintf(yyout,">= [%d] [%d]",$1,$3);}
+	| Expr IGUAL_IGUAL Expr 		{fprintf(yyout,"== [%d] [%d]",$1,$3);}
+	| Expr DIFERENTE_IGUAL Expr 	{fprintf(yyout,"!= [%d] [%d]",$1,$3);}
+	| Expr AND Expr 				{fprintf(yyout,"&& [%d] [%d]",$1,$3);}
+	| Expr OR Expr 					{fprintf(yyout,"|| [%d] [%d]",$1,$3);}
+	| MENOS Expr 					{fprintf(yyout,"- [%d]",$2);}
+	| NOT Expr 						{fprintf(yyout,"! [%d]",$2);}
+	| ABRE_PAREN Expr FECHA_PAREN 	{fprintf(yyout,"%d", $2);}
+	| DEC
+	| ID
 	;
 
 %%
