@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "parcer.tab.c"
+#include "parcer.tab.h"
 
 #define YY_DECL int yylex()
 

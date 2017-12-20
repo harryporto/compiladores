@@ -1,15 +1,19 @@
 %{
-
+#include <math.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 extern int yylex();
 extern FILE *yyin;
 extern FILE *yyout;
 
 
-void yyerror(const char* s);
+void yyerror(char* s) {
+	fprintf(stderr, "Parse error: %s\n", s);
+	exit(1);
+}
 
 %}
 
@@ -61,24 +65,27 @@ void yyerror(const char* s);
 %left  '*'  '/'
 %left UNA
 
+%type<inteiro> DEC
+%type<valor> ID
 
 %%
 
-Expr 	: Expr BinOp Expr ';' 
+/*Expr 	: Expr BinOp Expr ';' 
 	| 
-	;
-BinOp 	: '+' 
-	| '-' 
-	| '*' 
-	| '/' 
-	| '<' 
-	| "<=" 
-	| '>' 
-	| ">=" 
-	| "==" 
-	| "!=" 
-	| "&&" 
-	| "||"
+	;*/
+BinOp 	: DEC MAIS DEC  BinOp{fprintf(yyout,"%d + %d", $1,$3);}
+	| DEC MENOS DEC BinOp	{fprintf(yyout,"%d - %d", $1,$3);}
+	| DEC VEZES DEC	BinOp {fprintf(yyout,"%d * %d", $1,$3);}
+	| DEC DIVISAO DEC BinOp	{fprintf(yyout,"%d / %d", $1,$3);}
+	| DEC MENOR DEC	{fprintf(yyout,"%d < %d", $1,$3);}
+	| DEC MENOR_IGUAL DEC 	{fprintf(yyout,"%d <= %d", $1,$3);}
+	| DEC MAIOR DEC	{fprintf(yyout,"%d > %d", $1,$3);}
+	| DEC MAIOR_IGUAL DEC 	{fprintf(yyout,"%d >= %d", $1,$3);}
+	| DEC IGUAL_IGUAL DEC 	{fprintf(yyout,"%d == %d", $1,$3);}
+	| DEC DIFERENTE_IGUAL DEC 	{fprintf(yyout,"%d != %d", $1,$3);}
+	| DEC AND DEC	{fprintf(yyout,"%d && %d", $1,$3);}
+	| DEC OR DEC	{fprintf(yyout,"%d || %d", $1,$3);}
+	| 
 	;
 
 %%
@@ -98,9 +105,6 @@ int main(int argc, char** argv){
 	return 0;
 }
 
-void yyerror(const char* s) {
-	fprintf(stderr, "Parse error: %s\n", s);
-	exit(1);
-}
+
 
 
