@@ -1983,32 +1983,5 @@ void yyfree (void * ptr )
 
 
 
-/*%%
-
-{DEC}+    										{fprintf(yyout, "DEC \"%s\" %d\n",yytext,linha);}
-let|def|if|else|while|return|break|continue     					{fprintf(yyout, "KEY \"%s\" %d\n",yytext,linha);}
-{ID}      										{fprintf(yyout, "ID \"%s\" %d\n",yytext,linha);}
-[-+{}(),;=<>!]     									{fprintf(yyout, "SYM \"%s\" %d\n",yytext,linha);}
-{COM}     										{fprintf(yyout, "SYM \"%s\" %d\n",yytext,linha);}
-&&    											{fprintf(yyout, "SYM \"%s\" %d\n",yytext,linha);}
-"||"    										{fprintf(yyout, "SYM \"%s\" %d\n",yytext,linha);}
-\n		  									{linha++;}
-" "+	  										{continue;}
-\t+	  										{continue;}
-\/\/.+											{continue;}
-"_"		        								{fprintf(yyout, "ERROR \"%s\" %d\n",yytext,linha); return 0;}
-.         										{fprintf(yyout, "ERROR \"%s\" %d\n",yytext,linha); return 0;}
-
-%%
-
-
-int main(int argc, char const *argv[])
-{
-
-    if(argc > 0) yyin = fopen(argv[1],"r");
-      if(argc > 1) yyout = fopen(argv[2],"w");
-    yylex();
-    return 0;
-}*/
 
 

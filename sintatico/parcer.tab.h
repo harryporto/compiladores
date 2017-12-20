@@ -30,8 +30,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_YY_PARCER_H_INCLUDED
-# define YY_YY_PARCER_H_INCLUDED
+#ifndef YY_YY_PARCER_TAB_H_INCLUDED
+# define YY_YY_PARCER_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -45,23 +45,54 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    DEC = 258,
-    ID = 259,
-    BREAK = 260,
-    CONTINUE = 261,
-    IF = 262,
-    WHILE = 263,
-    RETURN = 264,
-    DEF = 265,
-    ELSE = 266,
-    LET = 267,
-    UNA = 274
+    MAIS = 258,
+    MENOS = 259,
+    VEZES = 260,
+    DIVISAO = 261,
+    ABRE_PAREN = 262,
+    FECHA_PAREN = 263,
+    PONTO_VIRGULA = 264,
+    MAIOR = 265,
+    MAIOR_IGUAL = 266,
+    MENOR = 267,
+    MENOR_IGUAL = 268,
+    IGUAL_IGUAL = 269,
+    DIFERENTE_IGUAL = 270,
+    AND = 271,
+    OR = 272,
+    NOT = 273,
+    ABRE_CHAVE = 274,
+    FECHA_CHAVE = 275,
+    ABRE_COLCHETE = 276,
+    FECHA_COLCHETE = 277,
+    VIRGULA = 278,
+    IGUAL = 279,
+    ID = 280,
+    DEC = 281,
+    BREAK = 282,
+    CONTINUE = 283,
+    IF = 284,
+    WHILE = 285,
+    RETURN = 286,
+    DEF = 287,
+    ELSE = 288,
+    LET = 289,
+    UNA = 296
   };
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+typedef union YYSTYPE YYSTYPE;
+union YYSTYPE
+{
+#line 17 "parcer.y" /* yacc.c:1909  */
+
+  char valor[100];
+  int inteiro;
+
+#line 95 "parcer.tab.h" /* yacc.c:1909  */
+};
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -71,4 +102,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_PARCER_H_INCLUDED  */
+#endif /* !YY_YY_PARCER_TAB_H_INCLUDED  */
