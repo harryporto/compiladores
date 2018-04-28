@@ -1,6 +1,1 @@
-void main(void)
-{
-  int a;
-  a = 4 + 5;
-}
-/*asd*\
+a/*/
