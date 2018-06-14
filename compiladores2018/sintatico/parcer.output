@@ -1,0 +1,171 @@
+Terminais sem uso na gramática
+
+   MAIS
+   MENOS
+   VEZES
+   DIV
+   ABRE_PAR
+   FECHA_PAR
+   PONTO_VIRGULA
+   MAIOR
+   MAIOR_IGUAL
+   MENOR
+   MENOR_IGUAL
+   IGUAL_IGUAL
+   DIFERENTE
+   ABRE_CHA
+   FECHA_CHA
+   ABRE_COL
+   FECHA_COL
+   VIRG
+   PVIRG
+   IGUAL
+   ID
+   IF
+   INT
+   WHILE
+   RETURN
+   ELSE
+   VOID
+   "||"
+   "&&"
+   "=="
+   "!="
+   '<'
+   "<="
+   ">="
+   '>'
+   '*'
+   '/'
+   UNA
+
+
+Gramática
+
+    0 $accept: Program $end
+
+    1 $@1: %empty
+
+    2 Program: $@1 Expr
+
+    3 Expr: Result
+
+    4 Result: NUM
+
+
+Terminais, com as regras onde eles aparecem
+
+$end (0) 0
+'*' (42)
+'/' (47)
+'<' (60)
+'>' (62)
+error (256)
+MAIS (258)
+MENOS (259)
+VEZES (260)
+DIV (261)
+ABRE_PAR (262)
+FECHA_PAR (263)
+PONTO_VIRGULA (264)
+MAIOR (265)
+MAIOR_IGUAL (266)
+MENOR (267)
+MENOR_IGUAL (268)
+IGUAL_IGUAL (269)
+DIFERENTE (270)
+ABRE_CHA (271)
+FECHA_CHA (272)
+ABRE_COL (273)
+FECHA_COL (274)
+VIRG (275)
+PVIRG (276)
+IGUAL (277)
+ID (278)
+NUM (279) 4
+IF (280)
+INT (281)
+WHILE (282)
+RETURN (283)
+ELSE (284)
+VOID (285)
+"||" (286)
+"&&" (287)
+"==" (288)
+"!=" (289)
+"<=" (290)
+">=" (291)
+UNA (292)
+
+
+Não terminais com as regras onde eles aparecem
+
+$accept (42)
+    à esquerda: 0
+Program (43)
+    à esquerda: 2, à direita: 0
+$@1 (44)
+    à esquerda: 1, à direita: 2
+Expr (45)
+    à esquerda: 3, à direita: 2
+Result (46)
+    à esquerda: 4, à direita: 3
+
+
+Estado 0
+
+    0 $accept: . Program $end
+    1 $@1: . %empty
+    2 Program: . $@1 Expr
+
+    $padrão  reduzir usando a regra 1 ($@1)
+
+    Program  ir ao estado 1
+    $@1      ir ao estado 2
+
+
+Estado 1
+
+    0 $accept: Program . $end
+
+    $end  deslocar, e ir ao estado 3
+
+
+Estado 2
+
+    2 Program: $@1 . Expr
+    3 Expr: . Result
+    4 Result: . NUM
+
+    NUM  deslocar, e ir ao estado 4
+
+    Expr    ir ao estado 5
+    Result  ir ao estado 6
+
+
+Estado 3
+
+    0 $accept: Program $end .
+
+    $padrão  aceitar
+
+
+Estado 4
+
+    4 Result: NUM .
+
+    $padrão  reduzir usando a regra 4 (Result)
+
+
+Estado 5
+
+    2 Program: $@1 Expr .
+
+    $padrão  reduzir usando a regra 2 (Program)
+
+
+Estado 6
+
+    3 Expr: Result .
+
+    $padrão  reduzir usando a regra 3 (Expr)
