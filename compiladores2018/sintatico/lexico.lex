@@ -26,8 +26,8 @@ while     						{return WHILE;}
 return     						{return RETURN;}
 {ID}  							{strcpy(yylval.valor, yytext);return ID;}
 {NUM}    						{ yylval.inteiro  = atoi(yytext);return NUM;}
-"+"   							{return MENOS;}
-"-"    							{return MAIS;}
+"+"   							{return MAIS;}
+"-"    							{return MENOS;}
 "*"     						{return VEZES;}
 "/"     						{return DIV;}
 "{"      						{return ABRE_CHA;}

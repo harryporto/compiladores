@@ -62,19 +62,47 @@ void yyerror(char* s) {
 %left UNA
 
 
-%type <inteiro> Expr Result
-//%type <valor> Bin_Ope Una_Ope Programa Var_decl Def_decl Lista_parametros Bloco Stmt Assign Funcao Argumentos
+%type <inteiro> Expr Factor SimExpr
+%type <valor> Var  Relop AddOp
 %start Program
 %%
 Program	: 
 	{fprintf(yyout,"[ ");} Expr {fprintf(yyout,"] ");}
 	;
 
-Expr : 
-	Expr MAIS Result {fprintf(yyout,"+ [%d] [%d]",$1,$3);}
-	| Result {$$ =$1;}
+Expr : Var IGUAL Expr 	{fprintf(yyout,"= [1] [1]");}
+	| SimExpr
 	;
-Result	 : NUM {$$ =$1;}
+Var  : ID
+	| ID ABRE_CHA Expr FECHA_CHA
+	;
+SimExpr : 
+	AddExpr Relop AddExpr 
+	| AddExpr
+	;
+Relop  : MENOR_IGUAL
+	| MENOR
+	| MAIOR
+	| MAIOR_IGUAL
+	| IGUAL_IGUAL
+	| DIFERENTE
+	;
+AddExpr : 
+	AddExpr AddOp Term {fprintf(yyout,"%s [1] [1]",$2);}
+	| Term 
+	;
+AddOp  : MAIS 	
+	| MENOS 
+	;
+Term  : Term MultOp Factor
+	| Factor
+	;
+MultOp  : VEZES
+	| DIV
+	;
+Factor	 :ABRE_PAR Expr FECHA_PAR
+	| Var 
+	| NUM 
 	;
 
 %%
