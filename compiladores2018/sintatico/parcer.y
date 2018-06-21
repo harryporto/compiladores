@@ -12,24 +12,14 @@ extern int yylex();
 extern FILE *yyin;
 extern FILE *yyout;
 
-// para erros
-bool error = false;
-bool errorMain = true;
-extern int linha;	//saber qual linha deu erro
 
-void yyerror(char* s) {
-	fprintf(stderr, "Parse error: %s, linha %d\n", s,linha);
-	exit(1);
-}
-
-
-void arvore(no_ast *eixo);
 int i=0,j=0,x,y,m=0,f=0;
-
-no_ast *token(char C_token[20]);
-no_ast *inserir_ast(int tokenodo, int nfilhos, ...);
-no_ast *raiz;
-node *met;
+void arvore(noAst *eixo);
+noAst *constante(int valor_constante);
+noAst *ident(char id[20]);
+noAst *insertAst(int tok, int nunf, ...);
+noAst *raiz;
+int yyerror(char *s){fprintf(yyout,"yyerror : %s\n",s);}
 
 %}
 
@@ -37,7 +27,7 @@ node *met;
 {
   char valor[100];
   int inteiro;
-  no_ast 	*ast;
+  noAst *ast;
 };
 
 
@@ -70,169 +60,191 @@ node *met;
 %token ELSE
 %token VOID
 
-%left  "||"
-%left  "&&"
-%right "==" "!="
-%left  '<'  "<="  ">="  '>'
+%left  ELSE
 %left  MAIS  MENOS
-%left  '*'  '/'
-%left UNA
-
-
-%type <ast> Program Expr Var SimExpr  AddExpr Term MultOp Factor
-%type <valor> AddOp Relop
+%left  MAIOR MENOR MAIOR_IGUAL MENOR_IGUAL DIFERENTE IGULA_IGUAL
+%left  VEZES  DIV
+ 
 %start Program
 %%
 Program	:
-	Expr {arvore($1);root = $$;}
+	Decl_list 
 	;
-
-Expr : Var IGUAL Expr 	{$$ = insertAst(IGUAL, 3, token($2),$1,$3);}
-	| SimExpr
+Decl_list : Decl_list Decl
+	| Decl
 	;
-Var  : ID 		{$$ = insertAst(ID, 1, token($1);}
-	| ID ABRE_CHA Expr FECHA_CHA 	{$$ = insertAst(VAR, 2, token($1),$3;}
+Decl : Var_decl
+	| Fun_decl
+	;
+Var_decl : Type_esp ID PVIRG
+	| Type_esp ID ABRE_COL NUM FECHA_COL PVIRG
+	;
+Type_esp : INT
+	| VOID
+	;
+Fun_decl : Type_esp ID ABRE_PAR Params FECHA_PAR Comp
+	;
+Params : Param_list
+	| VOID
+	;
+Param_list : Param_list VIRG Param
+	| Param
+	;
+Param : Type_esp ID
+	| Type_esp ID ABRE_COL FECHA_COL
+	;
+Comp : ABRE_CHA Local_decl Stat_list FECHA_CHA
+	;
+Local_decl : Local_decl Var_decl
+	|
+	;
+Stat_list : Stat_list Statement 
+	| 
+	;
+Statement : Expr_stmt
+	| Comp
+	| Selection
+	| Iteration
+ 	| Return
+	;
+Expr_stmt : Expr PVIRG
+	| PVIRG
+	;
+Selection : IF ABRE_PAR Expr FECHA_PAR Statement
+	| IF ABRE_PAR Expr FECHA_PAR Statement ELSE Statement
+	;
+Iteration : WHILE ABRE_PAR Expr FECHA_PAR Statement
+	;
+Return : RETURN PVIRG
+	| RETURN Expr
+	;
+Expr : Var IGUAL Expr 	
+	| SimExpr	
+	;
+Var  : ID 		
+	| ID ABRE_COL Expr FECHA_COL 	
 	;
 SimExpr :
-	AddExpr Relop AddExpr	{$$ = insertAst(RELOP, 3, $2,$1,$3);}
-	| AddExpr
+	AddExpr Relop AddExpr	
+	| AddExpr		
 	;
-Relop  : MENOR_IGUAL	{$$ = insertAst(MENOR_IGUAL, 1, $1);}
-	| MENOR 			{$$ = insertAst(MENOR, 1, $1);}
-	| MAIOR 			{$$ = insertAst(MAIOR, 1, $1);}
-	| MAIOR_IGUAL 		{$$ = insertAst(MAIOR_IGUAL, 1, $1);}
-	| IGUAL_IGUAL 		{$$ = insertAst(IGUAL_IGUAL, 1, $1);}
-	| DIFERENTE 		{$$ = insertAst(DIFERENTE, 1, $1);}
+Relop  : MENOR_IGUAL		
+	| MENOR 		
+	| MAIOR 		
+	| MAIOR_IGUAL 		
+	| IGUAL_IGUAL 		
+	| DIFERENTE 		
 	;
 AddExpr :
-	AddExpr AddOp Term {$$ = insertAst(ADDOP, 3, $2,$1,$3);}
-	| Term
+	AddExpr AddOp Term 	
+	| Term			
 	;
-AddOp  : MAIS		{$$ = insertAst(MAIS, 1, token($1));}
-	| MENOS 		{$$ = insertAst(MENOS, 1, token($1));}
+AddOp  : MAIS		
+	| MENOS 		
 	;
-Term  : Term MultOp Factor 	{$$ = insertAst(MULTOP, 3, $2,$1,$3);}
-	| Factor
+Term  : Term MultOp Factor 	
+	| Factor		
 	;
-MultOp  : VEZES 	{$$ = insertAst(VEZES, 1, token($1));}
-	| DIV			{$$ = insertAst(DIV, 1, token($1));}
+MultOp  : VEZES 	
+	| DIV			
 	;
-Factor	 :ABRE_PAR Expr FECHA_PAR {$$ = insertAst(VAR, 2, token($1),$3);}
-	| Var 	{$$ = insertAst(VAR, 1, token($1));}
-	| NUM 	{$$ = insertAst(NUM, 1, token($1));}
+Factor	 :ABRE_PAR Expr FECHA_PAR 
+	| Var 	
+	| Call
+	| NUM 	
 	;
-
+Call : ID ABRE_PAR Args FECHA_PAR
+	;
+Args : Arg_list
+	|
+	;
+Arg_list : Arg_list PVIRG Expr
+ 	| Expr
+	;
 %%
 
-no_ast *insertAst(int tok, int numf, ...) {
-    va_list ap;
-    no_ast *eixo = malloc(sizeof(no_ast));
+noAst *insertAst(int tok, int numf, ...) {
+   va_list ap;
+    noAst *an = malloc(sizeof(noAst));
     int i;
-
-	eixo->no.percorre = malloc(numf * sizeof(no_ast *));
+	
+	an->astn.filhos = malloc(numf * sizeof(noAst *));
 	va_start(ap, numf);
-
-    eixo->tipoNodo = Ramo;
-    eixo->no.tokenop = tok;
-    eixo->no.qt_filho = numf;
+    
+    an->tipoNodo = Ast;
+    an->astn.tokenOpr = tok;
+    an->astn.n_filhos = numf;
+    //fprintf(yyout, "token  %c:\n",tok);
 
     i = 0;
     while (i < numf) {
-		eixo->no.percorre[i] = va_arg(ap, no_ast*);
+		an->astn.filhos[i] = va_arg(ap, noAst*);
 		i++;
     }
-
+         
     va_end(ap);
-    return eixo;
+    return an;
 }
 
-void inicializa(node *LISTA){
-	LISTA->prox = NULL;
+noAst *constante(int valor_constante) {
+    noAst *an = malloc(sizeof(noAst));
+
+    an->tipoNodo = Tok;
+    //fprintf(yyout, "token  %d:\n",valor_constante);
+    an->token.val = valor_constante;
+
+    return an;
 }
 
-bool local (char *x, node *li){
-	if(li->prox==NULL){
-	   return false;
+void arvore (noAst *eixo){
+char op[2];
+  
+if(eixo != NULL) {
+    switch(eixo->astn.tokenOpr) {
+	 fprintf(yyout," %d , ",eixo->astn.tokenOpr);
+        case IGUAL:
+            fprintf(yyout," [=");
+            arvore(eixo->astn.filhos[0]);
+            arvore(eixo->astn.filhos[1]);
+          fprintf(yyout,"]x");
+        break;
+        case ABRE_PAR:
+          fprintf(yyout," [<");
+          arvore(eixo->astn.filhos[0]);
+  	  arvore(eixo->astn.filhos[2]);
+  	  fprintf(yyout,"]xx");
+        break;
+        case FECHA_PAR:
+	fprintf(yyout, "token  %d / %d:\n",eixo->astn.filhos[1]->token.val,MENOS);
+	switch(eixo->astn.filhos[1]->token.val){
+	case MAIS : strcpy(op, "+"); break;
+	case MENOS : strcpy(op, "-"); break;
 	}
-	else{
-	   node *p;
-	   p = li->prox;
-	   while (p != NULL && strcmp(p->str,x))
-	     p = p->prox;
-	     if (p==NULL){
-		return false;
-	     }
-	     else{
-		return true;}
-   	}
-}
-
-void inserir(char *x, node *LISTA)
-{
-	node *novo=(node *) malloc(sizeof(node));
-	if(!novo){
-		exit(1);
-	}
-	if (!local(x,LISTA)){
-		strcpy(novo->str,x);
-		node *oldHead = LISTA->prox;
-		LISTA->prox = novo;
-		novo->prox = oldHead;
-	}
-}
-
-void exibir(node *LISTA)
-{
-	if(LISTA->prox==NULL){
-		return ;
-	}
-	node *tmp;
-	tmp = LISTA->prox;
-	while( tmp != NULL){
-		tmp = tmp->prox;
-	}
-}
-
-void libera(node *LISTA)
-{
-	if(LISTA->prox!=NULL){
-		node *proxNode,*atual;
-		atual = LISTA->prox;
-		while(atual != NULL){
-			proxNode = atual->prox;
-			free(atual);
-			atual = proxNode;
-		}
-		inicializa(LISTA);
-	}
-}
-
-no_ast *token(char tok[20]) {
-    no_ast *no = malloc(sizeof(no_ast));
-     no->tipoNodo = TokenChar;
-     strcpy(no->folha.str_tokken, tok);
-    return no;
+          fprintf(yyout," [%s",op);
+          arvore(eixo->astn.filhos[0]);
+  	  arvore(eixo->astn.filhos[2]);
+  	  fprintf(yyout,"]xxx");
+        break;
+       // case ID:
+       //   fprintf(yyout," [%s]", eixo->astn.filhos[0]->token.val);
+      //  break;
+ 	case NUM:
+          fprintf(yyout," [%d]", eixo->astn.filhos[0]->token.val);
+        break;
+        }
+    }
 }
 
 int main(int argc, char** argv){
 
-	node *met = (node *) malloc(sizeof(node));
- 	if(!met){
-		exit(1);
-	}
-	inicializa(met);
-	inserir("print",met);
 	yyin = fopen(argv[1], "r");
 	yyout = fopen(argv[2], "w");
+	fprintf(yyout,"[program");
 	do{
 		yyparse();
 	}while(!feof(yyin));
-	exibir(met);
-		fprintf(yyout,"]");
-	if (error||errorMain) {
-		fclose(yyout);
-		yyout = fopen(argv[2], "w");
-	}
+	arvore(raiz);
+	//fprintf(yyout,"]");
 	fclose(yyin);
 	fclose(yyout);
 	return 0;

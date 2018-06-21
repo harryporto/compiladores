@@ -545,7 +545,7 @@ char *yytext_ptr;
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
-
+#include "tokens.h"
 #include "parcer.tab.h"
 
 int linha=1;

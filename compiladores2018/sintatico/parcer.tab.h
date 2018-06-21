@@ -73,7 +73,7 @@ extern int yydebug;
     RETURN = 283,
     ELSE = 284,
     VOID = 285,
-    UNA = 292
+    IGULA_IGUAL = 286
   };
 #endif
 
@@ -82,12 +82,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 21 "parcer.y" /* yacc.c:1909  */
+#line 27 "parcer.y" /* yacc.c:1909  */
 
   char valor[100];
   int inteiro;
+  noAst *ast;
 
-#line 91 "parcer.tab.h" /* yacc.c:1909  */
+#line 92 "parcer.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
