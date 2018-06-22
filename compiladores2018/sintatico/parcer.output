@@ -1,171 +1,1206 @@
-Terminais sem uso na gramática
+Terminals unused in grammar
 
-   MAIS
-   MENOS
-   VEZES
-   DIV
-   ABRE_PAR
-   FECHA_PAR
    PONTO_VIRGULA
-   MAIOR
-   MAIOR_IGUAL
-   MENOR
-   MENOR_IGUAL
-   IGUAL_IGUAL
-   DIFERENTE
-   ABRE_CHA
-   FECHA_CHA
-   ABRE_COL
-   FECHA_COL
-   VIRG
-   PVIRG
-   IGUAL
-   ID
-   IF
-   INT
-   WHILE
-   RETURN
-   ELSE
-   VOID
-   "||"
-   "&&"
-   "=="
-   "!="
-   '<'
-   "<="
-   ">="
-   '>'
-   '*'
-   '/'
-   UNA
+   PVIRGs
 
 
-Gramática
+Grammar
 
     0 $accept: Program $end
 
-    1 $@1: %empty
+    1 Program: Decl_list
 
-    2 Program: $@1 Expr
+    2 Decl_list: Decl_list Decl
+    3          | Decl
 
-    3 Expr: Result
+    4 Decl: Var_decl
+    5     | Fun_decl
 
-    4 Result: NUM
+    6 Var_decl: Type_esp ID PVIRG
+    7         | Type_esp ID ABRE_COL NUM FECHA_COL PVIRG
+
+    8 Type_esp: INT
+    9         | VOID
+
+   10 Fun_decl: Type_esp ID ABRE_PAR Params FECHA_PAR Comp
+
+   11 Params: Param_list
+   12       | VOID
+
+   13 Param_list: Param_list VIRG Param
+   14           | Param
+
+   15 Param: Type_esp ID
+   16      | Type_esp ID ABRE_COL FECHA_COL
+
+   17 Comp: ABRE_CHA Local_decl Stat_list FECHA_CHA
+
+   18 Local_decl: Local_decl Var_decl
+   19           | %empty
+
+   20 Stat_list: Stat_list Statement
+   21          | %empty
+
+   22 Statement: Expr_stmt
+   23          | Comp
+   24          | Selection
+   25          | Iteration
+   26          | Return
+
+   27 Expr_stmt: Expr PVIRG
+   28          | PVIRG
+
+   29 Selection: IF ABRE_PAR Expr FECHA_PAR Statement
+   30          | IF ABRE_PAR Expr FECHA_PAR Statement ELSE Statement
+
+   31 Iteration: WHILE ABRE_PAR Expr FECHA_PAR Statement
+
+   32 Return: RETURN PVIRG
+   33       | RETURN Expr
+
+   34 Expr: Var IGUAL Expr
+   35     | SimExpr
+
+   36 Var: ID
+   37    | ID ABRE_COL Expr FECHA_COL
+
+   38 SimExpr: AddExpr Relop AddExpr
+   39        | AddExpr
+
+   40 Relop: MENOR_IGUAL
+   41      | MENOR
+   42      | MAIOR
+   43      | MAIOR_IGUAL
+   44      | IGUAL_IGUAL
+   45      | DIFERENTE
+
+   46 AddExpr: AddExpr AddOp Term
+   47        | Term
+
+   48 AddOp: MAIS
+   49      | MENOS
+
+   50 Term: Term MultOp Factor
+   51     | Factor
+
+   52 MultOp: VEZES
+   53       | DIV
+
+   54 Factor: ABRE_PAR Expr FECHA_PAR
+   55       | Var
+   56       | Call
+   57       | NUM
+
+   58 Call: ID ABRE_PAR Args FECHA_PAR
+
+   59 Args: Arg_list
+   60     | %empty
+
+   61 Arg_list: Arg_list PVIRG Expr
+   62         | Expr
 
 
-Terminais, com as regras onde eles aparecem
+Terminals, with rules where they appear
 
 $end (0) 0
-'*' (42)
-'/' (47)
-'<' (60)
-'>' (62)
 error (256)
-MAIS (258)
-MENOS (259)
-VEZES (260)
-DIV (261)
-ABRE_PAR (262)
-FECHA_PAR (263)
+MAIS (258) 48
+MENOS (259) 49
+VEZES (260) 52
+DIV (261) 53
+ABRE_PAR (262) 10 29 30 31 54 58
+FECHA_PAR (263) 10 29 30 31 54 58
 PONTO_VIRGULA (264)
-MAIOR (265)
-MAIOR_IGUAL (266)
-MENOR (267)
-MENOR_IGUAL (268)
-IGUAL_IGUAL (269)
-DIFERENTE (270)
-ABRE_CHA (271)
-FECHA_CHA (272)
-ABRE_COL (273)
-FECHA_COL (274)
-VIRG (275)
-PVIRG (276)
-IGUAL (277)
-ID (278)
-NUM (279) 4
-IF (280)
-INT (281)
-WHILE (282)
-RETURN (283)
-ELSE (284)
-VOID (285)
-"||" (286)
-"&&" (287)
-"==" (288)
-"!=" (289)
-"<=" (290)
-">=" (291)
-UNA (292)
+MAIOR (265) 42
+MAIOR_IGUAL (266) 43
+MENOR (267) 41
+MENOR_IGUAL (268) 40
+IGUAL_IGUAL (269) 44
+DIFERENTE (270) 45
+ABRE_CHA (271) 17
+FECHA_CHA (272) 17
+ABRE_COL (273) 7 16 37
+FECHA_COL (274) 7 16 37
+VIRG (275) 13
+PVIRG (276) 6 7 27 28 32 61
+IGUAL (277) 34
+ID (278) 6 7 10 15 16 36 37 58
+NUM (279) 7 57
+IF (280) 29 30
+INT (281) 8
+WHILE (282) 31
+RETURN (283) 32 33
+ELSE (284) 30
+VOID (285) 9 12
+PVIRGs (286)
 
 
-Não terminais com as regras onde eles aparecem
+Nonterminals, with rules where they appear
 
-$accept (42)
-    à esquerda: 0
-Program (43)
-    à esquerda: 2, à direita: 0
-$@1 (44)
-    à esquerda: 1, à direita: 2
-Expr (45)
-    à esquerda: 3, à direita: 2
-Result (46)
-    à esquerda: 4, à direita: 3
+$accept (32)
+    on left: 0
+Program (33)
+    on left: 1, on right: 0
+Decl_list (34)
+    on left: 2 3, on right: 1 2
+Decl (35)
+    on left: 4 5, on right: 2 3
+Var_decl (36)
+    on left: 6 7, on right: 4 18
+Type_esp (37)
+    on left: 8 9, on right: 6 7 10 15 16
+Fun_decl (38)
+    on left: 10, on right: 5
+Params (39)
+    on left: 11 12, on right: 10
+Param_list (40)
+    on left: 13 14, on right: 11 13
+Param (41)
+    on left: 15 16, on right: 13 14
+Comp (42)
+    on left: 17, on right: 10 23
+Local_decl (43)
+    on left: 18 19, on right: 17 18
+Stat_list (44)
+    on left: 20 21, on right: 17 20
+Statement (45)
+    on left: 22 23 24 25 26, on right: 20 29 30 31
+Expr_stmt (46)
+    on left: 27 28, on right: 22
+Selection (47)
+    on left: 29 30, on right: 24
+Iteration (48)
+    on left: 31, on right: 25
+Return (49)
+    on left: 32 33, on right: 26
+Expr (50)
+    on left: 34 35, on right: 27 29 30 31 33 34 37 54 61 62
+Var (51)
+    on left: 36 37, on right: 34 55
+SimExpr (52)
+    on left: 38 39, on right: 35
+Relop (53)
+    on left: 40 41 42 43 44 45, on right: 38
+AddExpr (54)
+    on left: 46 47, on right: 38 39 46
+AddOp (55)
+    on left: 48 49, on right: 46
+Term (56)
+    on left: 50 51, on right: 46 47 50
+MultOp (57)
+    on left: 52 53, on right: 50
+Factor (58)
+    on left: 54 55 56 57, on right: 50 51
+Call (59)
+    on left: 58, on right: 56
+Args (60)
+    on left: 59 60, on right: 58
+Arg_list (61)
+    on left: 61 62, on right: 59 61
 
 
-Estado 0
+State 0
 
     0 $accept: . Program $end
-    1 $@1: . %empty
-    2 Program: . $@1 Expr
 
-    $padrão  reduzir usando a regra 1 ($@1)
+    INT   shift, and go to state 1
+    VOID  shift, and go to state 2
 
-    Program  ir ao estado 1
-    $@1      ir ao estado 2
+    Program    go to state 3
+    Decl_list  go to state 4
+    Decl       go to state 5
+    Var_decl   go to state 6
+    Type_esp   go to state 7
+    Fun_decl   go to state 8
 
 
-Estado 1
+State 1
+
+    8 Type_esp: INT .
+
+    $default  reduce using rule 8 (Type_esp)
+
+
+State 2
+
+    9 Type_esp: VOID .
+
+    $default  reduce using rule 9 (Type_esp)
+
+
+State 3
 
     0 $accept: Program . $end
 
-    $end  deslocar, e ir ao estado 3
+    $end  shift, and go to state 9
 
 
-Estado 2
+State 4
 
-    2 Program: $@1 . Expr
-    3 Expr: . Result
-    4 Result: . NUM
+    1 Program: Decl_list .
+    2 Decl_list: Decl_list . Decl
 
-    NUM  deslocar, e ir ao estado 4
+    INT   shift, and go to state 1
+    VOID  shift, and go to state 2
 
-    Expr    ir ao estado 5
-    Result  ir ao estado 6
+    $default  reduce using rule 1 (Program)
+
+    Decl      go to state 10
+    Var_decl  go to state 6
+    Type_esp  go to state 7
+    Fun_decl  go to state 8
 
 
-Estado 3
+State 5
+
+    3 Decl_list: Decl .
+
+    $default  reduce using rule 3 (Decl_list)
+
+
+State 6
+
+    4 Decl: Var_decl .
+
+    $default  reduce using rule 4 (Decl)
+
+
+State 7
+
+    6 Var_decl: Type_esp . ID PVIRG
+    7         | Type_esp . ID ABRE_COL NUM FECHA_COL PVIRG
+   10 Fun_decl: Type_esp . ID ABRE_PAR Params FECHA_PAR Comp
+
+    ID  shift, and go to state 11
+
+
+State 8
+
+    5 Decl: Fun_decl .
+
+    $default  reduce using rule 5 (Decl)
+
+
+State 9
 
     0 $accept: Program $end .
 
-    $padrão  aceitar
+    $default  accept
 
 
-Estado 4
+State 10
 
-    4 Result: NUM .
+    2 Decl_list: Decl_list Decl .
 
-    $padrão  reduzir usando a regra 4 (Result)
-
-
-Estado 5
-
-    2 Program: $@1 Expr .
-
-    $padrão  reduzir usando a regra 2 (Program)
+    $default  reduce using rule 2 (Decl_list)
 
 
-Estado 6
+State 11
 
-    3 Expr: Result .
+    6 Var_decl: Type_esp ID . PVIRG
+    7         | Type_esp ID . ABRE_COL NUM FECHA_COL PVIRG
+   10 Fun_decl: Type_esp ID . ABRE_PAR Params FECHA_PAR Comp
 
-    $padrão  reduzir usando a regra 3 (Expr)
+    ABRE_PAR  shift, and go to state 12
+    ABRE_COL  shift, and go to state 13
+    PVIRG     shift, and go to state 14
+
+
+State 12
+
+   10 Fun_decl: Type_esp ID ABRE_PAR . Params FECHA_PAR Comp
+
+    INT   shift, and go to state 1
+    VOID  shift, and go to state 15
+
+    Type_esp    go to state 16
+    Params      go to state 17
+    Param_list  go to state 18
+    Param       go to state 19
+
+
+State 13
+
+    7 Var_decl: Type_esp ID ABRE_COL . NUM FECHA_COL PVIRG
+
+    NUM  shift, and go to state 20
+
+
+State 14
+
+    6 Var_decl: Type_esp ID PVIRG .
+
+    $default  reduce using rule 6 (Var_decl)
+
+
+State 15
+
+    9 Type_esp: VOID .
+   12 Params: VOID .
+
+    FECHA_PAR  reduce using rule 12 (Params)
+    $default   reduce using rule 9 (Type_esp)
+
+
+State 16
+
+   15 Param: Type_esp . ID
+   16      | Type_esp . ID ABRE_COL FECHA_COL
+
+    ID  shift, and go to state 21
+
+
+State 17
+
+   10 Fun_decl: Type_esp ID ABRE_PAR Params . FECHA_PAR Comp
+
+    FECHA_PAR  shift, and go to state 22
+
+
+State 18
+
+   11 Params: Param_list .
+   13 Param_list: Param_list . VIRG Param
+
+    VIRG  shift, and go to state 23
+
+    $default  reduce using rule 11 (Params)
+
+
+State 19
+
+   14 Param_list: Param .
+
+    $default  reduce using rule 14 (Param_list)
+
+
+State 20
+
+    7 Var_decl: Type_esp ID ABRE_COL NUM . FECHA_COL PVIRG
+
+    FECHA_COL  shift, and go to state 24
+
+
+State 21
+
+   15 Param: Type_esp ID .
+   16      | Type_esp ID . ABRE_COL FECHA_COL
+
+    ABRE_COL  shift, and go to state 25
+
+    $default  reduce using rule 15 (Param)
+
+
+State 22
+
+   10 Fun_decl: Type_esp ID ABRE_PAR Params FECHA_PAR . Comp
+
+    ABRE_CHA  shift, and go to state 26
+
+    Comp  go to state 27
+
+
+State 23
+
+   13 Param_list: Param_list VIRG . Param
+
+    INT   shift, and go to state 1
+    VOID  shift, and go to state 2
+
+    Type_esp  go to state 16
+    Param     go to state 28
+
+
+State 24
+
+    7 Var_decl: Type_esp ID ABRE_COL NUM FECHA_COL . PVIRG
+
+    PVIRG  shift, and go to state 29
+
+
+State 25
+
+   16 Param: Type_esp ID ABRE_COL . FECHA_COL
+
+    FECHA_COL  shift, and go to state 30
+
+
+State 26
+
+   17 Comp: ABRE_CHA . Local_decl Stat_list FECHA_CHA
+
+    $default  reduce using rule 19 (Local_decl)
+
+    Local_decl  go to state 31
+
+
+State 27
+
+   10 Fun_decl: Type_esp ID ABRE_PAR Params FECHA_PAR Comp .
+
+    $default  reduce using rule 10 (Fun_decl)
+
+
+State 28
+
+   13 Param_list: Param_list VIRG Param .
+
+    $default  reduce using rule 13 (Param_list)
+
+
+State 29
+
+    7 Var_decl: Type_esp ID ABRE_COL NUM FECHA_COL PVIRG .
+
+    $default  reduce using rule 7 (Var_decl)
+
+
+State 30
+
+   16 Param: Type_esp ID ABRE_COL FECHA_COL .
+
+    $default  reduce using rule 16 (Param)
+
+
+State 31
+
+   17 Comp: ABRE_CHA Local_decl . Stat_list FECHA_CHA
+   18 Local_decl: Local_decl . Var_decl
+
+    INT   shift, and go to state 1
+    VOID  shift, and go to state 2
+
+    $default  reduce using rule 21 (Stat_list)
+
+    Var_decl   go to state 32
+    Type_esp   go to state 33
+    Stat_list  go to state 34
+
+
+State 32
+
+   18 Local_decl: Local_decl Var_decl .
+
+    $default  reduce using rule 18 (Local_decl)
+
+
+State 33
+
+    6 Var_decl: Type_esp . ID PVIRG
+    7         | Type_esp . ID ABRE_COL NUM FECHA_COL PVIRG
+
+    ID  shift, and go to state 35
+
+
+State 34
+
+   17 Comp: ABRE_CHA Local_decl Stat_list . FECHA_CHA
+   20 Stat_list: Stat_list . Statement
+
+    ABRE_PAR   shift, and go to state 36
+    ABRE_CHA   shift, and go to state 26
+    FECHA_CHA  shift, and go to state 37
+    PVIRG      shift, and go to state 38
+    ID         shift, and go to state 39
+    NUM        shift, and go to state 40
+    IF         shift, and go to state 41
+    WHILE      shift, and go to state 42
+    RETURN     shift, and go to state 43
+
+    Comp       go to state 44
+    Statement  go to state 45
+    Expr_stmt  go to state 46
+    Selection  go to state 47
+    Iteration  go to state 48
+    Return     go to state 49
+    Expr       go to state 50
+    Var        go to state 51
+    SimExpr    go to state 52
+    AddExpr    go to state 53
+    Term       go to state 54
+    Factor     go to state 55
+    Call       go to state 56
+
+
+State 35
+
+    6 Var_decl: Type_esp ID . PVIRG
+    7         | Type_esp ID . ABRE_COL NUM FECHA_COL PVIRG
+
+    ABRE_COL  shift, and go to state 13
+    PVIRG     shift, and go to state 14
+
+
+State 36
+
+   54 Factor: ABRE_PAR . Expr FECHA_PAR
+
+    ABRE_PAR  shift, and go to state 36
+    ID        shift, and go to state 39
+    NUM       shift, and go to state 40
+
+    Expr     go to state 57
+    Var      go to state 51
+    SimExpr  go to state 52
+    AddExpr  go to state 53
+    Term     go to state 54
+    Factor   go to state 55
+    Call     go to state 56
+
+
+State 37
+
+   17 Comp: ABRE_CHA Local_decl Stat_list FECHA_CHA .
+
+    $default  reduce using rule 17 (Comp)
+
+
+State 38
+
+   28 Expr_stmt: PVIRG .
+
+    $default  reduce using rule 28 (Expr_stmt)
+
+
+State 39
+
+   36 Var: ID .
+   37    | ID . ABRE_COL Expr FECHA_COL
+   58 Call: ID . ABRE_PAR Args FECHA_PAR
+
+    ABRE_PAR  shift, and go to state 58
+    ABRE_COL  shift, and go to state 59
+
+    $default  reduce using rule 36 (Var)
+
+
+State 40
+
+   57 Factor: NUM .
+
+    $default  reduce using rule 57 (Factor)
+
+
+State 41
+
+   29 Selection: IF . ABRE_PAR Expr FECHA_PAR Statement
+   30          | IF . ABRE_PAR Expr FECHA_PAR Statement ELSE Statement
+
+    ABRE_PAR  shift, and go to state 60
+
+
+State 42
+
+   31 Iteration: WHILE . ABRE_PAR Expr FECHA_PAR Statement
+
+    ABRE_PAR  shift, and go to state 61
+
+
+State 43
+
+   32 Return: RETURN . PVIRG
+   33       | RETURN . Expr
+
+    ABRE_PAR  shift, and go to state 36
+    PVIRG     shift, and go to state 62
+    ID        shift, and go to state 39
+    NUM       shift, and go to state 40
+
+    Expr     go to state 63
+    Var      go to state 51
+    SimExpr  go to state 52
+    AddExpr  go to state 53
+    Term     go to state 54
+    Factor   go to state 55
+    Call     go to state 56
+
+
+State 44
+
+   23 Statement: Comp .
+
+    $default  reduce using rule 23 (Statement)
+
+
+State 45
+
+   20 Stat_list: Stat_list Statement .
+
+    $default  reduce using rule 20 (Stat_list)
+
+
+State 46
+
+   22 Statement: Expr_stmt .
+
+    $default  reduce using rule 22 (Statement)
+
+
+State 47
+
+   24 Statement: Selection .
+
+    $default  reduce using rule 24 (Statement)
+
+
+State 48
+
+   25 Statement: Iteration .
+
+    $default  reduce using rule 25 (Statement)
+
+
+State 49
+
+   26 Statement: Return .
+
+    $default  reduce using rule 26 (Statement)
+
+
+State 50
+
+   27 Expr_stmt: Expr . PVIRG
+
+    PVIRG  shift, and go to state 64
+
+
+State 51
+
+   34 Expr: Var . IGUAL Expr
+   55 Factor: Var .
+
+    IGUAL  shift, and go to state 65
+
+    $default  reduce using rule 55 (Factor)
+
+
+State 52
+
+   35 Expr: SimExpr .
+
+    $default  reduce using rule 35 (Expr)
+
+
+State 53
+
+   38 SimExpr: AddExpr . Relop AddExpr
+   39        | AddExpr .
+   46 AddExpr: AddExpr . AddOp Term
+
+    MAIS         shift, and go to state 66
+    MENOS        shift, and go to state 67
+    MAIOR        shift, and go to state 68
+    MAIOR_IGUAL  shift, and go to state 69
+    MENOR        shift, and go to state 70
+    MENOR_IGUAL  shift, and go to state 71
+    IGUAL_IGUAL  shift, and go to state 72
+    DIFERENTE    shift, and go to state 73
+
+    $default  reduce using rule 39 (SimExpr)
+
+    Relop  go to state 74
+    AddOp  go to state 75
+
+
+State 54
+
+   47 AddExpr: Term .
+   50 Term: Term . MultOp Factor
+
+    VEZES  shift, and go to state 76
+    DIV    shift, and go to state 77
+
+    $default  reduce using rule 47 (AddExpr)
+
+    MultOp  go to state 78
+
+
+State 55
+
+   51 Term: Factor .
+
+    $default  reduce using rule 51 (Term)
+
+
+State 56
+
+   56 Factor: Call .
+
+    $default  reduce using rule 56 (Factor)
+
+
+State 57
+
+   54 Factor: ABRE_PAR Expr . FECHA_PAR
+
+    FECHA_PAR  shift, and go to state 79
+
+
+State 58
+
+   58 Call: ID ABRE_PAR . Args FECHA_PAR
+
+    ABRE_PAR  shift, and go to state 36
+    ID        shift, and go to state 39
+    NUM       shift, and go to state 40
+
+    $default  reduce using rule 60 (Args)
+
+    Expr      go to state 80
+    Var       go to state 51
+    SimExpr   go to state 52
+    AddExpr   go to state 53
+    Term      go to state 54
+    Factor    go to state 55
+    Call      go to state 56
+    Args      go to state 81
+    Arg_list  go to state 82
+
+
+State 59
+
+   37 Var: ID ABRE_COL . Expr FECHA_COL
+
+    ABRE_PAR  shift, and go to state 36
+    ID        shift, and go to state 39
+    NUM       shift, and go to state 40
+
+    Expr     go to state 83
+    Var      go to state 51
+    SimExpr  go to state 52
+    AddExpr  go to state 53
+    Term     go to state 54
+    Factor   go to state 55
+    Call     go to state 56
+
+
+State 60
+
+   29 Selection: IF ABRE_PAR . Expr FECHA_PAR Statement
+   30          | IF ABRE_PAR . Expr FECHA_PAR Statement ELSE Statement
+
+    ABRE_PAR  shift, and go to state 36
+    ID        shift, and go to state 39
+    NUM       shift, and go to state 40
+
+    Expr     go to state 84
+    Var      go to state 51
+    SimExpr  go to state 52
+    AddExpr  go to state 53
+    Term     go to state 54
+    Factor   go to state 55
+    Call     go to state 56
+
+
+State 61
+
+   31 Iteration: WHILE ABRE_PAR . Expr FECHA_PAR Statement
+
+    ABRE_PAR  shift, and go to state 36
+    ID        shift, and go to state 39
+    NUM       shift, and go to state 40
+
+    Expr     go to state 85
+    Var      go to state 51
+    SimExpr  go to state 52
+    AddExpr  go to state 53
+    Term     go to state 54
+    Factor   go to state 55
+    Call     go to state 56
+
+
+State 62
+
+   32 Return: RETURN PVIRG .
+
+    $default  reduce using rule 32 (Return)
+
+
+State 63
+
+   33 Return: RETURN Expr .
+
+    $default  reduce using rule 33 (Return)
+
+
+State 64
+
+   27 Expr_stmt: Expr PVIRG .
+
+    $default  reduce using rule 27 (Expr_stmt)
+
+
+State 65
+
+   34 Expr: Var IGUAL . Expr
+
+    ABRE_PAR  shift, and go to state 36
+    ID        shift, and go to state 39
+    NUM       shift, and go to state 40
+
+    Expr     go to state 86
+    Var      go to state 51
+    SimExpr  go to state 52
+    AddExpr  go to state 53
+    Term     go to state 54
+    Factor   go to state 55
+    Call     go to state 56
+
+
+State 66
+
+   48 AddOp: MAIS .
+
+    $default  reduce using rule 48 (AddOp)
+
+
+State 67
+
+   49 AddOp: MENOS .
+
+    $default  reduce using rule 49 (AddOp)
+
+
+State 68
+
+   42 Relop: MAIOR .
+
+    $default  reduce using rule 42 (Relop)
+
+
+State 69
+
+   43 Relop: MAIOR_IGUAL .
+
+    $default  reduce using rule 43 (Relop)
+
+
+State 70
+
+   41 Relop: MENOR .
+
+    $default  reduce using rule 41 (Relop)
+
+
+State 71
+
+   40 Relop: MENOR_IGUAL .
+
+    $default  reduce using rule 40 (Relop)
+
+
+State 72
+
+   44 Relop: IGUAL_IGUAL .
+
+    $default  reduce using rule 44 (Relop)
+
+
+State 73
+
+   45 Relop: DIFERENTE .
+
+    $default  reduce using rule 45 (Relop)
+
+
+State 74
+
+   38 SimExpr: AddExpr Relop . AddExpr
+
+    ABRE_PAR  shift, and go to state 36
+    ID        shift, and go to state 39
+    NUM       shift, and go to state 40
+
+    Var      go to state 87
+    AddExpr  go to state 88
+    Term     go to state 54
+    Factor   go to state 55
+    Call     go to state 56
+
+
+State 75
+
+   46 AddExpr: AddExpr AddOp . Term
+
+    ABRE_PAR  shift, and go to state 36
+    ID        shift, and go to state 39
+    NUM       shift, and go to state 40
+
+    Var     go to state 87
+    Term    go to state 89
+    Factor  go to state 55
+    Call    go to state 56
+
+
+State 76
+
+   52 MultOp: VEZES .
+
+    $default  reduce using rule 52 (MultOp)
+
+
+State 77
+
+   53 MultOp: DIV .
+
+    $default  reduce using rule 53 (MultOp)
+
+
+State 78
+
+   50 Term: Term MultOp . Factor
+
+    ABRE_PAR  shift, and go to state 36
+    ID        shift, and go to state 39
+    NUM       shift, and go to state 40
+
+    Var     go to state 87
+    Factor  go to state 90
+    Call    go to state 56
+
+
+State 79
+
+   54 Factor: ABRE_PAR Expr FECHA_PAR .
+
+    $default  reduce using rule 54 (Factor)
+
+
+State 80
+
+   62 Arg_list: Expr .
+
+    $default  reduce using rule 62 (Arg_list)
+
+
+State 81
+
+   58 Call: ID ABRE_PAR Args . FECHA_PAR
+
+    FECHA_PAR  shift, and go to state 91
+
+
+State 82
+
+   59 Args: Arg_list .
+   61 Arg_list: Arg_list . PVIRG Expr
+
+    PVIRG  shift, and go to state 92
+
+    $default  reduce using rule 59 (Args)
+
+
+State 83
+
+   37 Var: ID ABRE_COL Expr . FECHA_COL
+
+    FECHA_COL  shift, and go to state 93
+
+
+State 84
+
+   29 Selection: IF ABRE_PAR Expr . FECHA_PAR Statement
+   30          | IF ABRE_PAR Expr . FECHA_PAR Statement ELSE Statement
+
+    FECHA_PAR  shift, and go to state 94
+
+
+State 85
+
+   31 Iteration: WHILE ABRE_PAR Expr . FECHA_PAR Statement
+
+    FECHA_PAR  shift, and go to state 95
+
+
+State 86
+
+   34 Expr: Var IGUAL Expr .
+
+    $default  reduce using rule 34 (Expr)
+
+
+State 87
+
+   55 Factor: Var .
+
+    $default  reduce using rule 55 (Factor)
+
+
+State 88
+
+   38 SimExpr: AddExpr Relop AddExpr .
+   46 AddExpr: AddExpr . AddOp Term
+
+    MAIS   shift, and go to state 66
+    MENOS  shift, and go to state 67
+
+    $default  reduce using rule 38 (SimExpr)
+
+    AddOp  go to state 75
+
+
+State 89
+
+   46 AddExpr: AddExpr AddOp Term .
+   50 Term: Term . MultOp Factor
+
+    VEZES  shift, and go to state 76
+    DIV    shift, and go to state 77
+
+    $default  reduce using rule 46 (AddExpr)
+
+    MultOp  go to state 78
+
+
+State 90
+
+   50 Term: Term MultOp Factor .
+
+    $default  reduce using rule 50 (Term)
+
+
+State 91
+
+   58 Call: ID ABRE_PAR Args FECHA_PAR .
+
+    $default  reduce using rule 58 (Call)
+
+
+State 92
+
+   61 Arg_list: Arg_list PVIRG . Expr
+
+    ABRE_PAR  shift, and go to state 36
+    ID        shift, and go to state 39
+    NUM       shift, and go to state 40
+
+    Expr     go to state 96
+    Var      go to state 51
+    SimExpr  go to state 52
+    AddExpr  go to state 53
+    Term     go to state 54
+    Factor   go to state 55
+    Call     go to state 56
+
+
+State 93
+
+   37 Var: ID ABRE_COL Expr FECHA_COL .
+
+    $default  reduce using rule 37 (Var)
+
+
+State 94
+
+   29 Selection: IF ABRE_PAR Expr FECHA_PAR . Statement
+   30          | IF ABRE_PAR Expr FECHA_PAR . Statement ELSE Statement
+
+    ABRE_PAR  shift, and go to state 36
+    ABRE_CHA  shift, and go to state 26
+    PVIRG     shift, and go to state 38
+    ID        shift, and go to state 39
+    NUM       shift, and go to state 40
+    IF        shift, and go to state 41
+    WHILE     shift, and go to state 42
+    RETURN    shift, and go to state 43
+
+    Comp       go to state 44
+    Statement  go to state 97
+    Expr_stmt  go to state 46
+    Selection  go to state 47
+    Iteration  go to state 48
+    Return     go to state 49
+    Expr       go to state 50
+    Var        go to state 51
+    SimExpr    go to state 52
+    AddExpr    go to state 53
+    Term       go to state 54
+    Factor     go to state 55
+    Call       go to state 56
+
+
+State 95
+
+   31 Iteration: WHILE ABRE_PAR Expr FECHA_PAR . Statement
+
+    ABRE_PAR  shift, and go to state 36
+    ABRE_CHA  shift, and go to state 26
+    PVIRG     shift, and go to state 38
+    ID        shift, and go to state 39
+    NUM       shift, and go to state 40
+    IF        shift, and go to state 41
+    WHILE     shift, and go to state 42
+    RETURN    shift, and go to state 43
+
+    Comp       go to state 44
+    Statement  go to state 98
+    Expr_stmt  go to state 46
+    Selection  go to state 47
+    Iteration  go to state 48
+    Return     go to state 49
+    Expr       go to state 50
+    Var        go to state 51
+    SimExpr    go to state 52
+    AddExpr    go to state 53
+    Term       go to state 54
+    Factor     go to state 55
+    Call       go to state 56
+
+
+State 96
+
+   61 Arg_list: Arg_list PVIRG Expr .
+
+    $default  reduce using rule 61 (Arg_list)
+
+
+State 97
+
+   29 Selection: IF ABRE_PAR Expr FECHA_PAR Statement .
+   30          | IF ABRE_PAR Expr FECHA_PAR Statement . ELSE Statement
+
+    ELSE  shift, and go to state 99
+
+    $default  reduce using rule 29 (Selection)
+
+
+State 98
+
+   31 Iteration: WHILE ABRE_PAR Expr FECHA_PAR Statement .
+
+    $default  reduce using rule 31 (Iteration)
+
+
+State 99
+
+   30 Selection: IF ABRE_PAR Expr FECHA_PAR Statement ELSE . Statement
+
+    ABRE_PAR  shift, and go to state 36
+    ABRE_CHA  shift, and go to state 26
+    PVIRG     shift, and go to state 38
+    ID        shift, and go to state 39
+    NUM       shift, and go to state 40
+    IF        shift, and go to state 41
+    WHILE     shift, and go to state 42
+    RETURN    shift, and go to state 43
+
+    Comp       go to state 44
+    Statement  go to state 100
+    Expr_stmt  go to state 46
+    Selection  go to state 47
+    Iteration  go to state 48
+    Return     go to state 49
+    Expr       go to state 50
+    Var        go to state 51
+    SimExpr    go to state 52
+    AddExpr    go to state 53
+    Term       go to state 54
+    Factor     go to state 55
+    Call       go to state 56
+
+
+State 100
+
+   30 Selection: IF ABRE_PAR Expr FECHA_PAR Statement ELSE Statement .
+
+    $default  reduce using rule 30 (Selection)

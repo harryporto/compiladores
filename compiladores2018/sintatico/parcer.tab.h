@@ -51,29 +51,34 @@ extern int yydebug;
     DIV = 261,
     ABRE_PAR = 262,
     FECHA_PAR = 263,
-    PONTO_VIRGULA = 264,
-    MAIOR = 265,
-    MAIOR_IGUAL = 266,
-    MENOR = 267,
-    MENOR_IGUAL = 268,
-    IGUAL_IGUAL = 269,
-    DIFERENTE = 270,
-    ABRE_CHA = 271,
-    FECHA_CHA = 272,
-    ABRE_COL = 273,
-    FECHA_COL = 274,
-    VIRG = 275,
-    PVIRG = 276,
-    IGUAL = 277,
-    ID = 278,
-    NUM = 279,
-    IF = 280,
-    INT = 281,
-    WHILE = 282,
-    RETURN = 283,
-    ELSE = 284,
-    VOID = 285,
-    IGULA_IGUAL = 286
+    MAIOR = 264,
+    MAIOR_IGUAL = 265,
+    MENOR = 266,
+    MENOR_IGUAL = 267,
+    IGUAL_IGUAL = 268,
+    DIFERENTE = 269,
+    ABRE_CHA = 270,
+    FECHA_CHA = 271,
+    ABRE_COL = 272,
+    FECHA_COL = 273,
+    VIRG = 274,
+    PVIRG = 275,
+    IGUAL = 276,
+    ID = 277,
+    NUM = 278,
+    IF = 279,
+    INT = 280,
+    WHILE = 281,
+    RETURN = 282,
+    ELSE = 283,
+    VOID = 284,
+    P = 285,
+    D = 286,
+    LD = 287,
+    C = 288,
+    AR = 289,
+    SL = 290,
+    PVIRGs = 291
   };
 #endif
 
@@ -82,13 +87,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 27 "parcer.y" /* yacc.c:1909  */
+#line 28 "parcer.y" /* yacc.c:1909  */
 
   char valor[100];
   int inteiro;
   noAst *ast;
 
-#line 92 "parcer.tab.h" /* yacc.c:1909  */
+#line 97 "parcer.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
