@@ -156,7 +156,8 @@ extern int yydebug;
     C = 288,
     AR = 289,
     SL = 290,
-    PVIRGs = 291
+    PAR = 291,
+    PVIRGs = 292
   };
 #endif
 
@@ -171,7 +172,7 @@ union YYSTYPE
   int inteiro;
   noAst *ast;
 
-#line 175 "parcer.tab.c" /* yacc.c:355  */
+#line 176 "parcer.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -188,7 +189,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 192 "parcer.tab.c" /* yacc.c:358  */
+#line 193 "parcer.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -433,7 +434,7 @@ union yyalloc
 #define YYLAST   111
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  37
+#define YYNTOKENS  38
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  26
 /* YYNRULES -- Number of rules.  */
@@ -444,7 +445,7 @@ union yyalloc
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   291
+#define YYMAXUTOK   292
 
 #define YYTRANSLATE(YYX)                                                \
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -482,7 +483,7 @@ static const yytype_uint8 yytranslate[] =
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
       25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
-      35,    36
+      35,    36,    37
 };
 
 #if YYDEBUG
@@ -507,12 +508,12 @@ static const char *const yytname[] =
   "ABRE_PAR", "FECHA_PAR", "MAIOR", "MAIOR_IGUAL", "MENOR", "MENOR_IGUAL",
   "IGUAL_IGUAL", "DIFERENTE", "ABRE_CHA", "FECHA_CHA", "ABRE_COL",
   "FECHA_COL", "VIRG", "PVIRG", "IGUAL", "ID", "NUM", "IF", "INT", "WHILE",
-  "RETURN", "ELSE", "VOID", "P", "D", "LD", "C", "AR", "SL", "PVIRGs",
-  "$accept", "Program", "Decl_list", "Decl", "Var_decl", "Type_esp",
-  "Params", "Param_list", "Param", "Comp", "Local_decl", "Stat_list",
-  "Statement", "Expr_stmt", "Selection", "Iteration", "Return", "Expr",
-  "Var", "SimExpr", "AddExpr", "Term", "Factor", "Call", "Args",
-  "Arg_list", YY_NULLPTR
+  "RETURN", "ELSE", "VOID", "P", "D", "LD", "C", "AR", "SL", "PAR",
+  "PVIRGs", "$accept", "Program", "Decl_list", "Decl", "Var_decl",
+  "Type_esp", "Params", "Param_list", "Param", "Comp", "Local_decl",
+  "Stat_list", "Statement", "Expr_stmt", "Selection", "Iteration",
+  "Return", "Expr", "Var", "SimExpr", "AddExpr", "Term", "Factor", "Call",
+  "Args", "Arg_list", YY_NULLPTR
 };
 #endif
 
@@ -524,7 +525,7 @@ static const yytype_uint16 yytoknum[] =
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
      265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
      275,   276,   277,   278,   279,   280,   281,   282,   283,   284,
-     285,   286,   287,   288,   289,   290,   291
+     285,   286,   287,   288,   289,   290,   291,   292
 };
 # endif
 
@@ -628,28 +629,28 @@ static const yytype_int8 yycheck[] =
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    25,    29,    38,    39,    40,    41,    42,     0,    40,
-      22,     7,    17,    20,    29,    42,    43,    44,    45,    23,
-      22,     8,    19,    18,    17,    15,    46,    45,    20,    18,
-      47,    41,    42,    48,    22,     7,    16,    20,    22,    23,
-      24,    26,    27,    46,    49,    50,    51,    52,    53,    54,
-      55,    56,    57,    58,    59,    60,    54,     7,    17,     7,
-       7,    20,    54,    20,    21,     3,     4,     9,    10,    11,
-      12,    13,    14,     5,     6,     8,    54,    61,    62,    54,
-      54,    54,    54,    55,    58,    58,    57,    57,    57,    57,
-      57,    57,    59,    59,     8,    20,    18,     8,     8,    54,
-      49,    49,    28,    49
+       0,    25,    29,    39,    40,    41,    42,    43,     0,    41,
+      22,     7,    17,    20,    29,    43,    44,    45,    46,    23,
+      22,     8,    19,    18,    17,    15,    47,    46,    20,    18,
+      48,    42,    43,    49,    22,     7,    16,    20,    22,    23,
+      24,    26,    27,    47,    50,    51,    52,    53,    54,    55,
+      56,    57,    58,    59,    60,    61,    55,     7,    17,     7,
+       7,    20,    55,    20,    21,     3,     4,     9,    10,    11,
+      12,    13,    14,     5,     6,     8,    55,    62,    63,    55,
+      55,    55,    55,    56,    59,    59,    58,    58,    58,    58,
+      58,    58,    60,    60,     8,    20,    18,     8,     8,    55,
+      50,    50,    28,    50
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    37,    38,    39,    39,    40,    40,    41,    41,    42,
-      42,    43,    43,    44,    44,    45,    45,    46,    47,    47,
-      48,    48,    49,    49,    49,    49,    49,    50,    50,    51,
-      51,    52,    53,    53,    54,    54,    55,    55,    56,    56,
-      56,    56,    56,    56,    56,    57,    57,    57,    58,    58,
-      58,    59,    59,    59,    59,    60,    61,    61,    62,    62
+       0,    38,    39,    40,    40,    41,    41,    42,    42,    43,
+      43,    44,    44,    45,    45,    46,    46,    47,    48,    48,
+      49,    49,    50,    50,    50,    50,    50,    51,    51,    52,
+      52,    53,    54,    54,    55,    55,    56,    56,    57,    57,
+      57,    57,    57,    57,    57,    58,    58,    58,    59,    59,
+      59,    60,    60,    60,    60,    61,    62,    62,    63,    63
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
@@ -1339,353 +1340,353 @@ yyreduce:
         case 2:
 #line 79 "parcer.y" /* yacc.c:1646  */
     {raiz = (yyval.ast);}
-#line 1343 "parcer.tab.c" /* yacc.c:1646  */
+#line 1344 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
 #line 81 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(D,2,(yyvsp[-1].ast),(yyvsp[0].ast));}
-#line 1349 "parcer.tab.c" /* yacc.c:1646  */
+#line 1350 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
 #line 82 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = (yyvsp[0].ast);}
-#line 1355 "parcer.tab.c" /* yacc.c:1646  */
+#line 1356 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
 #line 84 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = (yyvsp[0].ast);}
-#line 1361 "parcer.tab.c" /* yacc.c:1646  */
+#line 1362 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
 #line 85 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(ABRE_PAR,4,(yyvsp[-5].ast),ident((yyvsp[-4].valor)),(yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 1367 "parcer.tab.c" /* yacc.c:1646  */
+#line 1368 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
 #line 87 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(PVIRG,2,(yyvsp[-2].ast),ident((yyvsp[-1].valor)));}
-#line 1373 "parcer.tab.c" /* yacc.c:1646  */
+#line 1374 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
 #line 88 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(ABRE_COL,3,(yyvsp[-5].ast),ident((yyvsp[-4].valor)),(yyvsp[-2].inteiro));}
-#line 1379 "parcer.tab.c" /* yacc.c:1646  */
+#line 1380 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
 #line 90 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(INT,0);}
-#line 1385 "parcer.tab.c" /* yacc.c:1646  */
+#line 1386 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
 #line 91 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(VOID,0);}
-#line 1391 "parcer.tab.c" /* yacc.c:1646  */
+#line 1392 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
 #line 93 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = (yyvsp[0].ast);}
-#line 1397 "parcer.tab.c" /* yacc.c:1646  */
+#line 1398 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
 #line 94 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(VOID,0);}
-#line 1403 "parcer.tab.c" /* yacc.c:1646  */
+#line 1404 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
 #line 96 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(VIRG,2,(yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 1409 "parcer.tab.c" /* yacc.c:1646  */
+#line 1410 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
 #line 97 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = (yyvsp[0].ast);}
-#line 1415 "parcer.tab.c" /* yacc.c:1646  */
+#line 1416 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
 #line 99 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(P,2,(yyvsp[-1].ast),ident((yyvsp[0].valor)));}
-#line 1421 "parcer.tab.c" /* yacc.c:1646  */
+#line 1422 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
 #line 100 "parcer.y" /* yacc.c:1646  */
-    {(yyval.ast) = insertAst(ABRE_COL,2,(yyvsp[-3].ast),ident((yyvsp[-2].valor)));}
-#line 1427 "parcer.tab.c" /* yacc.c:1646  */
+    {(yyval.ast) = insertAst(PAR,2,(yyvsp[-3].ast),ident((yyvsp[-2].valor)));}
+#line 1428 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
 #line 102 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(ABRE_CHA,2,(yyvsp[-2].ast),(yyvsp[-1].ast));}
-#line 1433 "parcer.tab.c" /* yacc.c:1646  */
+#line 1434 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
 #line 104 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(LD,2,(yyvsp[-1].ast),(yyvsp[0].ast));}
-#line 1439 "parcer.tab.c" /* yacc.c:1646  */
+#line 1440 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
 #line 105 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = NULL;}
-#line 1445 "parcer.tab.c" /* yacc.c:1646  */
+#line 1446 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
 #line 107 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(SL,2,(yyvsp[-1].ast),(yyvsp[0].ast));}
-#line 1451 "parcer.tab.c" /* yacc.c:1646  */
+#line 1452 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
 #line 108 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = NULL;}
-#line 1457 "parcer.tab.c" /* yacc.c:1646  */
+#line 1458 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
 #line 110 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = (yyvsp[0].ast);}
-#line 1463 "parcer.tab.c" /* yacc.c:1646  */
+#line 1464 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
 #line 111 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = (yyvsp[0].ast);}
-#line 1469 "parcer.tab.c" /* yacc.c:1646  */
+#line 1470 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
 #line 112 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = (yyvsp[0].ast);}
-#line 1475 "parcer.tab.c" /* yacc.c:1646  */
+#line 1476 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
 #line 113 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = (yyvsp[0].ast);}
-#line 1481 "parcer.tab.c" /* yacc.c:1646  */
+#line 1482 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
 #line 114 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = (yyvsp[0].ast);}
-#line 1487 "parcer.tab.c" /* yacc.c:1646  */
+#line 1488 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
 #line 116 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = (yyvsp[-1].ast);}
-#line 1493 "parcer.tab.c" /* yacc.c:1646  */
+#line 1494 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
 #line 117 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = NULL;}
-#line 1499 "parcer.tab.c" /* yacc.c:1646  */
+#line 1500 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
 #line 119 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(IF,2,(yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 1505 "parcer.tab.c" /* yacc.c:1646  */
+#line 1506 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
 #line 120 "parcer.y" /* yacc.c:1646  */
-    {(yyval.ast) = insertAst(ELSE,4,(yyvsp[-4].ast),(yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 1511 "parcer.tab.c" /* yacc.c:1646  */
+    {(yyval.ast) = insertAst(ELSE,3,(yyvsp[-4].ast),(yyvsp[-2].ast),(yyvsp[0].ast));}
+#line 1512 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
 #line 122 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(WHILE,1,(yyvsp[-2].ast));}
-#line 1517 "parcer.tab.c" /* yacc.c:1646  */
+#line 1518 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
 #line 124 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(RETURN,0);}
-#line 1523 "parcer.tab.c" /* yacc.c:1646  */
+#line 1524 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
 #line 125 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(RETURN,1,(yyvsp[0].ast));}
-#line 1529 "parcer.tab.c" /* yacc.c:1646  */
+#line 1530 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
 #line 127 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(IGUAL,2,(yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 1535 "parcer.tab.c" /* yacc.c:1646  */
+#line 1536 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
 #line 128 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = (yyvsp[0].ast);}
-#line 1541 "parcer.tab.c" /* yacc.c:1646  */
+#line 1542 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
 #line 130 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(ID,1,ident((yyvsp[0].valor)));}
-#line 1547 "parcer.tab.c" /* yacc.c:1646  */
+#line 1548 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
 #line 131 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(ID,2,ident((yyvsp[-3].valor)),(yyvsp[-1].ast));}
-#line 1553 "parcer.tab.c" /* yacc.c:1646  */
+#line 1554 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
 #line 134 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(MENOR_IGUAL,2,(yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 1559 "parcer.tab.c" /* yacc.c:1646  */
+#line 1560 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
 #line 135 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(MENOR,2,(yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 1565 "parcer.tab.c" /* yacc.c:1646  */
+#line 1566 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
 #line 136 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(MAIOR,2,(yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 1571 "parcer.tab.c" /* yacc.c:1646  */
+#line 1572 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
 #line 137 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(MAIOR_IGUAL,2,(yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 1577 "parcer.tab.c" /* yacc.c:1646  */
+#line 1578 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
 #line 138 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(IGUAL_IGUAL,2,(yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 1583 "parcer.tab.c" /* yacc.c:1646  */
+#line 1584 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
 #line 139 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(DIFERENTE,2,(yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 1589 "parcer.tab.c" /* yacc.c:1646  */
+#line 1590 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
 #line 140 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = (yyvsp[0].ast);}
-#line 1595 "parcer.tab.c" /* yacc.c:1646  */
+#line 1596 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
 #line 143 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(MAIS,2,(yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 1601 "parcer.tab.c" /* yacc.c:1646  */
+#line 1602 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
 #line 144 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(MENOS,2,(yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 1607 "parcer.tab.c" /* yacc.c:1646  */
+#line 1608 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
 #line 145 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = (yyvsp[0].ast);}
-#line 1613 "parcer.tab.c" /* yacc.c:1646  */
+#line 1614 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 48:
 #line 147 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(VEZES,2,(yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 1619 "parcer.tab.c" /* yacc.c:1646  */
+#line 1620 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 49:
 #line 148 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(DIV,2,(yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 1625 "parcer.tab.c" /* yacc.c:1646  */
+#line 1626 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 50:
 #line 149 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = (yyvsp[0].ast);}
-#line 1631 "parcer.tab.c" /* yacc.c:1646  */
+#line 1632 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 51:
 #line 151 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = (yyvsp[-1].ast);}
-#line 1637 "parcer.tab.c" /* yacc.c:1646  */
+#line 1638 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 52:
 #line 152 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = (yyvsp[0].ast);}
-#line 1643 "parcer.tab.c" /* yacc.c:1646  */
+#line 1644 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 53:
 #line 153 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = (yyvsp[0].ast);}
-#line 1649 "parcer.tab.c" /* yacc.c:1646  */
+#line 1650 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 54:
 #line 154 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(NUM,1,constante((yyvsp[0].inteiro)));}
-#line 1655 "parcer.tab.c" /* yacc.c:1646  */
+#line 1656 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
 #line 156 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(C,2,ident((yyvsp[-3].valor)),(yyvsp[-1].ast));}
-#line 1661 "parcer.tab.c" /* yacc.c:1646  */
+#line 1662 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 56:
 #line 158 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = (yyvsp[0].ast);}
-#line 1667 "parcer.tab.c" /* yacc.c:1646  */
+#line 1668 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
 #line 159 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = NULL;}
-#line 1673 "parcer.tab.c" /* yacc.c:1646  */
+#line 1674 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 58:
 #line 161 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = insertAst(AR,2,(yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 1679 "parcer.tab.c" /* yacc.c:1646  */
+#line 1680 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
   case 59:
 #line 162 "parcer.y" /* yacc.c:1646  */
     {(yyval.ast) = (yyvsp[0].ast);}
-#line 1685 "parcer.tab.c" /* yacc.c:1646  */
+#line 1686 "parcer.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1689 "parcer.tab.c" /* yacc.c:1646  */
+#line 1690 "parcer.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1986,11 +1987,62 @@ if(eixo != NULL) {
             fprintf(yyout," [var-declaration3");
             arvore(eixo->astn.filhos[0]);
             arvore(eixo->astn.filhos[1]);
-	    fprintf(yyout,"\[");
             arvore(eixo->astn.filhos[2]);
-	    fprintf(yyout,"\]");
           fprintf(yyout,"]");
-        break;         
+        break;
+	case VIRG:
+            fprintf(yyout," funcao:");
+            arvore(eixo->astn.filhos[0]);
+            arvore(eixo->astn.filhos[1]);
+        break; 
+	case P:
+            fprintf(yyout," [parametros: ");
+            arvore(eixo->astn.filhos[0]);
+            arvore(eixo->astn.filhos[1]);
+          fprintf(yyout,"]");
+        break;
+	case PAR:
+            fprintf(yyout," [parametros2: ");
+            arvore(eixo->astn.filhos[0]);
+            arvore(eixo->astn.filhos[1]);
+          fprintf(yyout,"]");
+        break;
+	case ABRE_CHA:
+            fprintf(yyout," funcao:");
+            arvore(eixo->astn.filhos[0]);
+            arvore(eixo->astn.filhos[1]);
+        break;
+	case LD:
+            fprintf(yyout," declaracao local:");
+            arvore(eixo->astn.filhos[0]);
+            arvore(eixo->astn.filhos[1]);
+        break;
+	case SL:
+            fprintf(yyout," lista:");
+            arvore(eixo->astn.filhos[0]);
+            arvore(eixo->astn.filhos[1]);
+        break;
+	case IF:
+            fprintf(yyout," If: ");
+            arvore(eixo->astn.filhos[0]);
+            arvore(eixo->astn.filhos[1]);
+        break;
+	case ELSE:
+            fprintf(yyout," else: ");
+            arvore(eixo->astn.filhos[0]);
+            arvore(eixo->astn.filhos[1]);
+            arvore(eixo->astn.filhos[2]);
+        break;
+	case WHILE:
+            fprintf(yyout," while: ");
+            arvore(eixo->astn.filhos[0]);
+        break; 
+	case RETURN:
+            fprintf(yyout," return: ");
+	    if(eixo->astn.filhos[0]){
+            	arvore(eixo->astn.filhos[0]);
+	    }
+        break;	        
 	case IGUAL:
             fprintf(yyout," [=");
             arvore(eixo->astn.filhos[0]);
@@ -2000,70 +2052,79 @@ if(eixo != NULL) {
         case MAIS:
           fprintf(yyout," [+");
           arvore(eixo->astn.filhos[0]);
-  	  arvore(eixo->astn.filhos[2]);
+  	  arvore(eixo->astn.filhos[1]);
   	  fprintf(yyout,"]");
         break;
 	case MENOS:
           fprintf(yyout," [-");
           arvore(eixo->astn.filhos[0]);
-  	  arvore(eixo->astn.filhos[2]);
+  	  arvore(eixo->astn.filhos[1]);
   	  fprintf(yyout,"]");
         break;
 	case VEZES:
           fprintf(yyout," [*");
           arvore(eixo->astn.filhos[0]);
-  	  arvore(eixo->astn.filhos[2]);
+  	  arvore(eixo->astn.filhos[1]);
   	  fprintf(yyout,"]");
         break;
 	case DIV:
           fprintf(yyout," [/");
           arvore(eixo->astn.filhos[0]);
-  	  arvore(eixo->astn.filhos[2]);
+  	  arvore(eixo->astn.filhos[1]);
   	  fprintf(yyout,"]");
         break;
 	case MAIOR:
           fprintf(yyout," [>");
           arvore(eixo->astn.filhos[0]);
-  	  arvore(eixo->astn.filhos[2]);
+  	  arvore(eixo->astn.filhos[1]);
   	  fprintf(yyout,"]");
         break;
 	case MENOR:
           fprintf(yyout," [<");
           arvore(eixo->astn.filhos[0]);
-  	  arvore(eixo->astn.filhos[2]);
+  	  arvore(eixo->astn.filhos[1]);
   	  fprintf(yyout,"]");
         break;
 	case MAIOR_IGUAL:
           fprintf(yyout," [>=");
           arvore(eixo->astn.filhos[0]);
-  	  arvore(eixo->astn.filhos[2]);
+  	  arvore(eixo->astn.filhos[1]);
   	  fprintf(yyout,"]");
         break;
 	case MENOR_IGUAL:
           fprintf(yyout," [<=");
           arvore(eixo->astn.filhos[0]);
-  	  arvore(eixo->astn.filhos[2]);
+  	  arvore(eixo->astn.filhos[1]);
   	  fprintf(yyout,"]");
         break;
 	case IGUAL_IGUAL:
           fprintf(yyout," [==");
           arvore(eixo->astn.filhos[0]);
-  	  arvore(eixo->astn.filhos[2]);
+  	  arvore(eixo->astn.filhos[1]);
   	  fprintf(yyout,"]");
         break;
 	case DIFERENTE:
           fprintf(yyout," [!=");
           arvore(eixo->astn.filhos[0]);
-  	  arvore(eixo->astn.filhos[2]);
+  	  arvore(eixo->astn.filhos[1]);
   	  fprintf(yyout,"]");
         break;
         case ID:
-          fprintf(yyout," [%s]", eixo->astn.filhos[0]->token.val);
+          fprintf(yyout," [%d]", eixo->astn.filhos[0]->token.val);
         break;
  	case NUM:
           fprintf(yyout,"li $a0, %d /n", eixo->astn.filhos[0]->token.val);
         break;
-
+	case C:
+          fprintf(yyout," chamada:");
+          arvore(eixo->astn.filhos[0]);
+  	  arvore(eixo->astn.filhos[1]);
+        break;
+	case AR:
+          fprintf(yyout," argumentos:");
+          arvore(eixo->astn.filhos[0]);
+  	  arvore(eixo->astn.filhos[1]);
+        break;
     	}
    }
 }

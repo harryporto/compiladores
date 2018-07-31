@@ -78,7 +78,8 @@ extern int yydebug;
     C = 288,
     AR = 289,
     SL = 290,
-    PVIRGs = 291
+    PAR = 291,
+    PVIRGs = 292
   };
 #endif
 
@@ -93,7 +94,7 @@ union YYSTYPE
   int inteiro;
   noAst *ast;
 
-#line 97 "parcer.tab.h" /* yacc.c:1909  */
+#line 98 "parcer.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

@@ -63,7 +63,7 @@ void yyerror(char *s){return ;}
 
 %left  ID INT
 %left  MAIS  MENOS
-%left  ABRE_PAR  ABRE_COL ABRE_CHA
+%left  ABRE_PAR  ABRE_COL ABRE_CHA PAR
 %left  FECHA_PAR  FECHA_COL FECHA_CHA
 %left  MAIOR MENOR MAIOR_IGUAL MENOR_IGUAL DIFERENTE IGUAL_IGUAL
 %left  VEZES  DIV
@@ -97,7 +97,7 @@ Param_list : Param_list VIRG Param				{$$ = insertAst(VIRG,2,$1,$3);}
 	| Param							{$$ = $1;}
 	;
 Param : Type_esp ID						{$$ = insertAst(P,2,$1,ident($2));}	
-	| Type_esp ID ABRE_COL FECHA_COL			{$$ = insertAst(ABRE_COL,2,$1,ident($2));}
+	| Type_esp ID ABRE_COL FECHA_COL			{$$ = insertAst(PAR,2,$1,ident($2));}
 	;
 Comp : ABRE_CHA Local_decl Stat_list FECHA_CHA			{$$ = insertAst(ABRE_CHA,2,$2,$3);}
 	;
@@ -117,7 +117,7 @@ Expr_stmt : Expr PVIRG						{$$ = $1;}
 	| PVIRG							{$$ = NULL;}
 	;
 Selection : IF ABRE_PAR Expr FECHA_PAR Statement		{$$ = insertAst(IF,2,$3,$5);}
-	| IF ABRE_PAR Expr FECHA_PAR Statement ELSE Statement	{$$ = insertAst(ELSE,4,$3,$5,$7);}
+	| IF ABRE_PAR Expr FECHA_PAR Statement ELSE Statement	{$$ = insertAst(ELSE,3,$3,$5,$7);}
 	;
 Iteration : WHILE ABRE_PAR Expr FECHA_PAR Statement		{$$ = insertAst(WHILE,1,$3);}
 	;
@@ -233,20 +233,62 @@ if(eixo != NULL) {
             fprintf(yyout," [var-declaration3");
             arvore(eixo->astn.filhos[0]);
             arvore(eixo->astn.filhos[1]);
-	    fprintf(yyout,"\[");
             arvore(eixo->astn.filhos[2]);
-	    fprintf(yyout,"\]");
           fprintf(yyout,"]");
-        break; 
-	case ABRE_CHA:
-            fprintf(yyout," ");
+        break;
+	case VIRG:
+            fprintf(yyout," funcao:");
             arvore(eixo->astn.filhos[0]);
             arvore(eixo->astn.filhos[1]);
-	    fprintf(yyout,"\[");
-            arvore(eixo->astn.filhos[2]);
-	    fprintf(yyout,"\]");
+        break; 
+	case P:
+            fprintf(yyout," [parametros: ");
+            arvore(eixo->astn.filhos[0]);
+            arvore(eixo->astn.filhos[1]);
           fprintf(yyout,"]");
-        break; 	        
+        break;
+	case PAR:
+            fprintf(yyout," [parametros2: ");
+            arvore(eixo->astn.filhos[0]);
+            arvore(eixo->astn.filhos[1]);
+          fprintf(yyout,"]");
+        break;
+	case ABRE_CHA:
+            fprintf(yyout," funcao:");
+            arvore(eixo->astn.filhos[0]);
+            arvore(eixo->astn.filhos[1]);
+        break;
+	case LD:
+            fprintf(yyout," declaracao local:");
+            arvore(eixo->astn.filhos[0]);
+            arvore(eixo->astn.filhos[1]);
+        break;
+	case SL:
+            fprintf(yyout," lista:");
+            arvore(eixo->astn.filhos[0]);
+            arvore(eixo->astn.filhos[1]);
+        break;
+	case IF:
+            fprintf(yyout," If: ");
+            arvore(eixo->astn.filhos[0]);
+            arvore(eixo->astn.filhos[1]);
+        break;
+	case ELSE:
+            fprintf(yyout," else: ");
+            arvore(eixo->astn.filhos[0]);
+            arvore(eixo->astn.filhos[1]);
+            arvore(eixo->astn.filhos[2]);
+        break;
+	case WHILE:
+            fprintf(yyout," while: ");
+            arvore(eixo->astn.filhos[0]);
+        break; 
+	case RETURN:
+            fprintf(yyout," return: ");
+	    if(eixo->astn.filhos[0]){
+            	arvore(eixo->astn.filhos[0]);
+	    }
+        break;	        
 	case IGUAL:
             fprintf(yyout," [=");
             arvore(eixo->astn.filhos[0]);
@@ -256,70 +298,79 @@ if(eixo != NULL) {
         case MAIS:
           fprintf(yyout," [+");
           arvore(eixo->astn.filhos[0]);
-  	  arvore(eixo->astn.filhos[2]);
+  	  arvore(eixo->astn.filhos[1]);
   	  fprintf(yyout,"]");
         break;
 	case MENOS:
           fprintf(yyout," [-");
           arvore(eixo->astn.filhos[0]);
-  	  arvore(eixo->astn.filhos[2]);
+  	  arvore(eixo->astn.filhos[1]);
   	  fprintf(yyout,"]");
         break;
 	case VEZES:
           fprintf(yyout," [*");
           arvore(eixo->astn.filhos[0]);
-  	  arvore(eixo->astn.filhos[2]);
+  	  arvore(eixo->astn.filhos[1]);
   	  fprintf(yyout,"]");
         break;
 	case DIV:
           fprintf(yyout," [/");
           arvore(eixo->astn.filhos[0]);
-  	  arvore(eixo->astn.filhos[2]);
+  	  arvore(eixo->astn.filhos[1]);
   	  fprintf(yyout,"]");
         break;
 	case MAIOR:
           fprintf(yyout," [>");
           arvore(eixo->astn.filhos[0]);
-  	  arvore(eixo->astn.filhos[2]);
+  	  arvore(eixo->astn.filhos[1]);
   	  fprintf(yyout,"]");
         break;
 	case MENOR:
           fprintf(yyout," [<");
           arvore(eixo->astn.filhos[0]);
-  	  arvore(eixo->astn.filhos[2]);
+  	  arvore(eixo->astn.filhos[1]);
   	  fprintf(yyout,"]");
         break;
 	case MAIOR_IGUAL:
           fprintf(yyout," [>=");
           arvore(eixo->astn.filhos[0]);
-  	  arvore(eixo->astn.filhos[2]);
+  	  arvore(eixo->astn.filhos[1]);
   	  fprintf(yyout,"]");
         break;
 	case MENOR_IGUAL:
           fprintf(yyout," [<=");
           arvore(eixo->astn.filhos[0]);
-  	  arvore(eixo->astn.filhos[2]);
+  	  arvore(eixo->astn.filhos[1]);
   	  fprintf(yyout,"]");
         break;
 	case IGUAL_IGUAL:
           fprintf(yyout," [==");
           arvore(eixo->astn.filhos[0]);
-  	  arvore(eixo->astn.filhos[2]);
+  	  arvore(eixo->astn.filhos[1]);
   	  fprintf(yyout,"]");
         break;
 	case DIFERENTE:
           fprintf(yyout," [!=");
           arvore(eixo->astn.filhos[0]);
-  	  arvore(eixo->astn.filhos[2]);
+  	  arvore(eixo->astn.filhos[1]);
   	  fprintf(yyout,"]");
         break;
         case ID:
-          fprintf(yyout," [%s]", eixo->astn.filhos[0]->token.val);
+          fprintf(yyout," [%d]", eixo->astn.filhos[0]->token.val);
         break;
  	case NUM:
           fprintf(yyout,"li $a0, %d /n", eixo->astn.filhos[0]->token.val);
         break;
-
+	case C:
+          fprintf(yyout," chamada:");
+          arvore(eixo->astn.filhos[0]);
+  	  arvore(eixo->astn.filhos[1]);
+        break;
+	case AR:
+          fprintf(yyout," argumentos:");
+          arvore(eixo->astn.filhos[0]);
+  	  arvore(eixo->astn.filhos[1]);
+        break;
     	}
    }
 }
